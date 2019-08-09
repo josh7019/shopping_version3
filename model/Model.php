@@ -281,7 +281,8 @@
          */
         public function startTransaction()
         {
-            $mysqli->query('START TRANSACTION');
+            $this->mysqli->autocommit(FALSE);
+            $this->mysqli->begin_transaction();
         }
 
         /*
@@ -289,15 +290,17 @@
          */
         public function commit()
         {
-            $mysqli->query('commit');
+            $this->mysqli->commit();
+            $this->mysqli->autocommit(TRUE);
         }
 
         /*
          * 退回交易
          */
-        public function rollBack()
+        public function rollback()
         {
-            $mysqli->query('rollback');
+            $this->mysqli->rollBack();
+            $this->mysqli->autocommit(TRUE);
         }
     }
 

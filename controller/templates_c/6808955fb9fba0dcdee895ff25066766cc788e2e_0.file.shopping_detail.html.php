@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 12:07:21
+/* Smarty version 3.1.33, created on 2019-08-09 14:27:27
   from 'C:\xampp\htdocs\shopping\views\shopping_detail.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4b9ff9c246a6_86351159',
+  'unifunc' => 'content_5d4d124f870553_94867697',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6808955fb9fba0dcdee895ff25066766cc788e2e' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_detail.html',
-      1 => 1565237240,
+      1 => 1565332045,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4b9ff9c246a6_86351159 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d124f870553_94867697 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +91,7 @@ function content_5d4b9ff9c246a6_86351159 (Smarty_Internal_Template $_smarty_tpl)
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="/shopping/controller/usercontroller.php/index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/userController.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -115,6 +115,20 @@ echo $_prefixVariable2;?>
 $_prefixVariable3 = ob_get_clean();
 echo $_prefixVariable3;?>
 
+                    <?php ob_start();
+if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+$_prefixVariable4 = ob_get_clean();
+echo $_prefixVariable4;?>
+
+                    <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
+                    <?php ob_start();
+}
+$_prefixVariable5 = ob_get_clean();
+echo $_prefixVariable5;?>
+
+                    
+                    
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -131,18 +145,117 @@ echo $_prefixVariable3;?>
                 
                 <ul class="nav navbar-nav navbar-right">
                     <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="button" class="btn btn-default">搜尋商品</button>
+                            <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/usercontroller.php/shoppinghistory"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
-                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
-                    <li class="dropdown"></li>
+                    <?php ob_start();
+if ($_smarty_tpl->tpl_vars['is_login']->value) {
+$_prefixVariable6 = ob_get_clean();
+echo $_prefixVariable6;?>
+
+                        <?php ob_start();
+if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+$_prefixVariable7 = ob_get_clean();
+echo $_prefixVariable7;?>
+
+                        
+                        <li>
+                            <a href="/shopping/controller/managercontroller.php/orderMenu">
+                                <span class="glyphicon glyphicon-list-alt"></span> 訂單管理
+                            </a>
+                        </li>
+                        <?php ob_start();
+} else {
+$_prefixVariable8 = ob_get_clean();
+echo $_prefixVariable8;?>
+
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                    <span class="badge badge-light" id='product_count'>
+                                        <?php ob_start();
+if (isset($_smarty_tpl->tpl_vars['order_detail_list_length']->value)) {
+$_prefixVariable9 = ob_get_clean();
+echo $_prefixVariable9;?>
+
+                                        <?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_list_length']->value;
+$_prefixVariable10 = ob_get_clean();
+echo $_prefixVariable10;?>
+
+                                        <?php ob_start();
+} else {
+$_prefixVariable11 = ob_get_clean();
+echo $_prefixVariable11;?>
+
+                                        0
+                                        <?php ob_start();
+}
+$_prefixVariable12 = ob_get_clean();
+echo $_prefixVariable12;?>
+
+                                    </span>
+                                </a>
+                            </li>
+                        <?php ob_start();
+}
+$_prefixVariable13 = ob_get_clean();
+echo $_prefixVariable13;?>
+
+                        <?php ob_start();
+} else {
+$_prefixVariable14 = ob_get_clean();
+echo $_prefixVariable14;?>
+
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                    <span class="badge badge-light" id='product_count'>
+                                        <?php ob_start();
+if (isset($_smarty_tpl->tpl_vars['order_detail_list_length']->value)) {
+$_prefixVariable15 = ob_get_clean();
+echo $_prefixVariable15;?>
+
+                                        <?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_list_length']->value;
+$_prefixVariable16 = ob_get_clean();
+echo $_prefixVariable16;?>
+
+                                        <?php ob_start();
+} else {
+$_prefixVariable17 = ob_get_clean();
+echo $_prefixVariable17;?>
+
+                                        0
+                                        <?php ob_start();
+}
+$_prefixVariable18 = ob_get_clean();
+echo $_prefixVariable18;?>
+
+                                    </span>
+                                </a>
+                            </li>
+                    <?php ob_start();
+}
+$_prefixVariable19 = ob_get_clean();
+echo $_prefixVariable19;?>
+
                 </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
-    </nav>
+        </nav>
 
 
         <div class='container'>
@@ -166,29 +279,29 @@ echo $_prefixVariable3;?>
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['order_detail_list']->value, 'order_detail_item');
 if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['order_detail_item']->value) {
-$_prefixVariable4 = ob_get_clean();
-echo $_prefixVariable4;?>
+$_prefixVariable20 = ob_get_clean();
+echo $_prefixVariable20;?>
 
                             <tr class="item-color-1">
                                 <td><img src="/shopping/img/<?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_detail_item']->value['image'];
-$_prefixVariable5 = ob_get_clean();
-echo $_prefixVariable5;?>
+$_prefixVariable21 = ob_get_clean();
+echo $_prefixVariable21;?>
 " alt=""></td>
                                 <td><?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_detail_item']->value['name'];
-$_prefixVariable6 = ob_get_clean();
-echo $_prefixVariable6;?>
+$_prefixVariable22 = ob_get_clean();
+echo $_prefixVariable22;?>
 </td>
                                 <td><?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_detail_item']->value['deal_price'];
-$_prefixVariable7 = ob_get_clean();
-echo $_prefixVariable7;?>
+$_prefixVariable23 = ob_get_clean();
+echo $_prefixVariable23;?>
 </td>
                                 <td><?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_detail_item']->value['amount'];
-$_prefixVariable8 = ob_get_clean();
-echo $_prefixVariable8;?>
+$_prefixVariable24 = ob_get_clean();
+echo $_prefixVariable24;?>
 </td>
                                 <td></td>
                                 <td>
@@ -198,8 +311,8 @@ echo $_prefixVariable8;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable9 = ob_get_clean();
-echo $_prefixVariable9;?>
+$_prefixVariable25 = ob_get_clean();
+echo $_prefixVariable25;?>
 
                     </tbody>
                 </table><!-- 顯示區結束 -->
@@ -207,8 +320,8 @@ echo $_prefixVariable9;?>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable10 = ob_get_clean();
-echo $_prefixVariable10;?>
+$_prefixVariable26 = ob_get_clean();
+echo $_prefixVariable26;?>
 '>
         
         

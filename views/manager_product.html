@@ -176,7 +176,12 @@
                             <td>已下架</td>
                             {{/if}}
                             <td>{{$product_item['updated_at']}}</td>
-                            <td>{{$product_item['saled']}}</td>
+                            <td>{{if $product_item['total_saled']}}
+                                    {{$product_item['total_saled']}}
+                                {{else}}
+                                    0
+                                {{/if}}
+                            </td>
                             <td>
                                 <span class="pull-right">
                                     <a href="/shopping/controller/managercontroller.php/editproduct/{{$product_item['product_id']}}" class="btn btn-warning">

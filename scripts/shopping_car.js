@@ -2,6 +2,8 @@
 
 window.onload = function () {
     button_element_list = document.getElementsByClassName('delete_button');
+    checkout_button = document.getElementById('checkout_button');
+    checkout_button.onclick = function() {checkout();}
     for (let i = 0; i < button_element_list.length; i++) {
         button_element_list[i].onclick = function (e) {
             row = e.target.parentElement.parentElement.parentElement;
@@ -16,19 +18,21 @@ window.onload = function () {
             row = e.target.parentElement.parentElement;
             product_id = row.children[0].value;
             amount = e.target.value;
-            if(!checkUnsigned(amount)) {
-                alert('不得為負或小數');
+            if (!checkUnsigned(amount)) {
+                alert('請輸入不小於1的整數');
+                if (amount <= 0) {
+                    e.target.value = 1;
+                }
                 return ;
             }
             changeAmount(e)
         }
     }
-    checkout_button = document.getElementById('checkout_button');
-    checkout_button.onclick = function() {checkout();}
+    
 }
 
 function deleteOne() {
-    if(!confirm('確定移除商品嗎?')){
+    if (!confirm('確定移除商品嗎?')) {
         return ;
     }
     $.ajax({
@@ -46,6 +50,12 @@ function deleteOne() {
                     document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'];
                 } else {
                     document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'] + "(餘額不足)";
+                    checkout_button.disabled = 'disabled';
+                }
+                if (result_array['total_price'] <= 0 || result_array['user_final_cash'] < 0) {
+                    checkout_button.disabled = 'disabled';
+                } else {
+                    checkout_button.disabled = false;
                 }
             } else {
                 row.style.display = 'none';
@@ -72,6 +82,11 @@ function changeAmount(e) {
                     document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'];
                 } else {
                     document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'] + "(餘額不足)";
+                }
+                if (result_array['total_price'] <= 0 || result_array['user_final_cash'] < 0) {
+                    checkout_button.disabled = 'disabled';
+                } else {
+                    checkout_button.disabled = false;
                 }
             } else if (result_array['is_success'] == 2) {
                 row.style.display = 'none';

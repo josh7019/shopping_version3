@@ -136,9 +136,11 @@
                 ['stock'],
                 [$stock],
                 ['product_id'],
-                [$product_id]
+                [$product_id],
+                'ii'
             );
             return $is_success;
         }
+        
         
     }

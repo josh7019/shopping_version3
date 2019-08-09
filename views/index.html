@@ -149,8 +149,18 @@
                 <div class=col-md-12 ><b class='item_title'>{{$product_item['name']}}</b></div>
                 <img src="/shopping/img/{{$product_item['image']}}" alt="">
                 <div class=col-md-12 ><b class='item_price'>價格:NT{{$product_item['price']}}</b></div>
+                <div class=col-md-12 ><b class='item_price'>庫存量:{{$product_item['stock']}}</b></div>
+
                 <div class=col-md-12 ><b class='item_created_date'>上架日期:{{$product_item['updated_at']}}</b></div>
-                <div class=col-md-12 ><b class='item_saled'>已售出:{{$product_item['saled']}}套</b></div>
+                <div class=col-md-12 >
+                    <b class='item_saled'>已售出:
+                        {{if $product_item['total_saled']}}
+                            {{$product_item['total_saled']}}
+                        {{else}}
+                            0
+                        {{/if}}套
+                    </b>
+                </div>
                 <div class=col-md-12 >
                     <input type="hidden" value = {{$product_item['product_id']}}>
                     <span class='btn btn-warning'>

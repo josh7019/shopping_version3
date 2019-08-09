@@ -236,12 +236,15 @@
                             {{/if}}
                         </td>
                         <td>
-                                <span class="pull-right" id="checkout_button">
-                                    <span class="btn btn-warning">
+                                <span class="pull-right" >
+                                    <button id="checkout_button" class="btn btn-warning"
+                                    {{if $user_final_cash < 0  || $total_price <= 0}}
+                                        disabled='disabled' 
+                                        {{/if}}>
                                         <span class="glyphicon glyphicon-usd">
                                         </span>
                                         結帳
-                                    </span>
+                                    </button>
                                 </span>
                             </td>
                     </tbody>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 18:38:07
+/* Smarty version 3.1.33, created on 2019-08-09 16:20:35
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4bfb8fac0459_79887143',
+  'unifunc' => 'content_5d4d2cd3097926_48689397',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565260684,
+      1 => 1565338833,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4bfb8fac0459_79887143 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d2cd3097926_48689397 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -272,21 +272,47 @@ echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
 $_prefixVariable23 = ob_get_clean();
 echo $_prefixVariable23;?>
 </b></div>
-                <div class=col-md-12 ><b class='item_created_date'>上架日期:<?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['updated_at'];
+                <div class=col-md-12 ><b class='item_price'>庫存量:<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['stock'];
 $_prefixVariable24 = ob_get_clean();
 echo $_prefixVariable24;?>
 </b></div>
-                <div class=col-md-12 ><b class='item_saled'>已售出:<?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['saled'];
+
+                <div class=col-md-12 ><b class='item_created_date'>上架日期:<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['updated_at'];
 $_prefixVariable25 = ob_get_clean();
 echo $_prefixVariable25;?>
-套</b></div>
+</b></div>
+                <div class=col-md-12 >
+                    <b class='item_saled'>已售出:
+                        <?php ob_start();
+if ($_smarty_tpl->tpl_vars['product_item']->value['total_saled']) {
+$_prefixVariable26 = ob_get_clean();
+echo $_prefixVariable26;?>
+
+                            <?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['total_saled'];
+$_prefixVariable27 = ob_get_clean();
+echo $_prefixVariable27;?>
+
+                        <?php ob_start();
+} else {
+$_prefixVariable28 = ob_get_clean();
+echo $_prefixVariable28;?>
+
+                            0
+                        <?php ob_start();
+}
+$_prefixVariable29 = ob_get_clean();
+echo $_prefixVariable29;?>
+套
+                    </b>
+                </div>
                 <div class=col-md-12 >
                     <input type="hidden" value = <?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
-$_prefixVariable26 = ob_get_clean();
-echo $_prefixVariable26;?>
+$_prefixVariable30 = ob_get_clean();
+echo $_prefixVariable30;?>
 >
                     <span class='btn btn-warning'>
                         <span class="glyphicon glyphicon-eye-open"></span> 商品資訊
@@ -300,8 +326,8 @@ echo $_prefixVariable26;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable27 = ob_get_clean();
-echo $_prefixVariable27;?>
+$_prefixVariable31 = ob_get_clean();
+echo $_prefixVariable31;?>
 
         </div>
     </div>

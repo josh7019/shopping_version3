@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 19:12:13
+/* Smarty version 3.1.33, created on 2019-08-09 15:02:08
   from 'C:\xampp\htdocs\shopping\views\manager_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c038de595e3_97636808',
+  'unifunc' => 'content_5d4d1a7027f769_37800565',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '715e4840d826b58454bd968349ab543be0b2d37a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_product.html',
-      1 => 1565262684,
+      1 => 1565334123,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c038de595e3_97636808 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d1a7027f769_37800565 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -324,16 +324,33 @@ $_prefixVariable29 = ob_get_clean();
 echo $_prefixVariable29;?>
 </td>
                             <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['saled'];
+if ($_smarty_tpl->tpl_vars['product_item']->value['total_saled']) {
 $_prefixVariable30 = ob_get_clean();
 echo $_prefixVariable30;?>
-</td>
+
+                                    <?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['total_saled'];
+$_prefixVariable31 = ob_get_clean();
+echo $_prefixVariable31;?>
+
+                                <?php ob_start();
+} else {
+$_prefixVariable32 = ob_get_clean();
+echo $_prefixVariable32;?>
+
+                                    0
+                                <?php ob_start();
+}
+$_prefixVariable33 = ob_get_clean();
+echo $_prefixVariable33;?>
+
+                            </td>
                             <td>
                                 <span class="pull-right">
                                     <a href="/shopping/controller/managercontroller.php/editproduct/<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
-$_prefixVariable31 = ob_get_clean();
-echo $_prefixVariable31;?>
+$_prefixVariable34 = ob_get_clean();
+echo $_prefixVariable34;?>
 " class="btn btn-warning">
                                         <span class="glyphicon glyphicon-pencil">
                                         </span> 編輯
@@ -350,8 +367,8 @@ echo $_prefixVariable31;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable32 = ob_get_clean();
-echo $_prefixVariable32;?>
+$_prefixVariable35 = ob_get_clean();
+echo $_prefixVariable35;?>
 
                     </tbody>
                 </table><!-- 會員顯示區結束 -->

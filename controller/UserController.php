@@ -6,37 +6,43 @@
     class UserController extends Controller
     {
         private $id;
+        public $smarty;
         public function __construct($action, $id)
         {
             $this->id = $id;
+            $this->smarty = new Smarty;
             if (method_exists($this, $action)) {
                 $this->$action();
             } else {
                 $action = 'GET_index';
                 $this->$action();
             }
-            // parent::__construct();
         }
         
         public function GET_index()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
-            
             $product = new Product;
             $product_list = $product->getAllProductOnSale();
-            $smarty = new Smarty;
+            $order_detail = new OrderDetail;
+            foreach ($product_list as $index => $product_item) {
+                $total_saled = $order_detail->getProductSaled($product_item['product_id']);
+                $product_list[$index]['total_saled'] = $total_saled;
+            }
+            // 
             if ($is_login) {
                 $order_menu_id = checkAndGetOrderMenuId($user_item);
                 $order_detail = new OrderDetail;
                 $order_detail_list = $order_detail->getAllProductId($order_menu_id);
-                $smarty->assign('order_detail_list_length', count($order_detail_list));
+                $this->smarty->assign('order_detail_list_length', count($order_detail_list));
             }
             
-            $smarty->assign('product_list', $product_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display('../views/index.html');
+            $this->smarty->assign('product_list', $product_list);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display('../views/index.html');
         }
           
         /*
@@ -44,6 +50,7 @@
          */
         public function POST_checkAccount()
         {
+            $this->isPost();
             $account = $_POST['account'];
             $user = new User();
             $user_account = $user->getAccount($account);
@@ -56,8 +63,9 @@
          */
         public function GET_signup()
         {
-            $smarty = new Smarty;
-            $smarty->display('../views/signup.html');
+            $this->isGet();
+            // 
+            $this->smarty->display('../views/signup.html');
         }
         
         /*
@@ -65,6 +73,7 @@
          */
         public function POST_signup()
         {
+            $this->isPost();
             $account = $_POST['account'];
             $password = $_POST['password'];
             $id_number = $_POST['id_number'];
@@ -102,12 +111,14 @@
          */
         public function GET_login()
         {
-            $smarty = new Smarty;
-            $smarty->display('../views/login.html');
+            $this->isGet();
+            // 
+            $this->smarty->display('../views/login.html');
         }
 
          public function POST_login()
         {
+            $this->isPost();
             $account = $_POST['account'];
             $password = $_POST['password'];
             $check_tool = new CheckTool;
@@ -124,7 +135,7 @@
             $user = new User;
             $user_item = $user->getAccount($account);
             ## 搜尋帳號
-            if (isset($user_item['account'])){
+            if (isset($user_item['account'])) {
                 if (password_verify($password, $user_item['password'])) {
                     $token = produceToken();
                     $user->addToken($account, $token);
@@ -152,12 +163,13 @@
          */
         public function GET_logout()
         {
-            $smarty = new Smarty;
-            $smarty->display('../views/logout.html');
+            $this->isGet();
+            $this->smarty->display('../views/logout.html');
         }
 
         public function DELETE_logout()
         {
+            $this->isDelete();
             setcookie ("token", "test", time()-100, '/');
             setcookie ("order_menu_id", "test", time()-100, '/');
             
@@ -174,6 +186,7 @@
          */
         public function GET_shoppingCar()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             if ($is_login) {
@@ -200,16 +213,13 @@
                 $product_list = 0;
             }
             
-            
-            // var_dump($user_item);
-            $smarty = new Smarty;
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('user_item', $user_item);
-            $smarty->assign('product_list', $product_list);
-            $smarty->assign('total_price', $total_price);
-            $smarty->assign('user_final_cash', $user_final_cash);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display('../views/shopping_car.html');
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('product_list', $product_list);
+            $this->smarty->assign('total_price', $total_price);
+            $this->smarty->assign('user_final_cash', $user_final_cash);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display('../views/shopping_car.html');
         }
 
         /*
@@ -217,6 +227,7 @@
          */
         public function POST_addProduct()
         {
+            $this->isPost();
             ##檢查是否登入
             if (!checkToken()) {
                 $data = [
@@ -256,6 +267,7 @@
          */
         public function DELETE_product()
         {
+            $this->isDelete();
             parse_str(file_get_contents('php://input'), $_DELETE);
             $user_item = getUser();
             $order_menu_id = checkAndGetOrderMenuId($user_item);
@@ -285,6 +297,7 @@
          */
         public function PUT_product()
         {
+            $this->isPut();
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_item = getUser();
             $order_menu_id = checkAndGetOrderMenuId($user_item);
@@ -368,33 +381,44 @@
                 exit();
             }
             $order_menu = new OrderMenu;
+            $order_detail = new OrderDetail;
             $user = new User;
             $product = new Product;
             $order_menu_id = checkAndGetOrderMenuId($user_item);
             ##交易流程開始
             $user->startTransaction();
-            ## 使用者扣款
-            $is_success_user = $user->checkOut($final_price, $user_item['user_id']);
+            $order_menu->startTransaction();
+            $order_detail->startTransaction();
+            $product->startTransaction();
             ## 登記所有物品價格
-            $is_success_deal_price = updateDealPriceAndPrice($order_menu_id);
-            ## 修改訂單狀態
-            $is_success_order = $order_menu->checkOut($order_menu_id);   
-            
-            if ($is_success_user && $is_success_deal_price && $is_success_order) {
-                checkAndGetOrderMenuId($user_item);
-                $user->commit();
-                $data = [
-                    'alert' => '結帳成功,感謝您的光臨',
-                    'location' => '/shopping/controller/usercontroller.php/index',
-                    'is_success' => true
-                ];
-            } else {
-                $user->rollBack();
-                $data = [
-                    'alert' => '結帳失敗',
-                    'is_success' => false
-                ];
-            }  
+            if ($is_success_deal_price = updateDealPriceAndStock($order_detail, $product, $order_menu_id)) {
+                ## 使用者扣款
+                if ($is_success_user = $user->checkOut($final_price, $user_item['user_id'])) {
+                    ## 修改訂單狀態
+                    if ($is_success_order = $order_menu->checkOut($order_menu_id)) {
+                        checkAndGetOrderMenuId($user_item);
+                        $data = [
+                            'alert' => '結帳成功,感謝您的光臨',
+                            'location' => '/shopping/controller/usercontroller.php/index',
+                            'is_success' => true
+                        ];
+                        echo json_encode($data);
+                        $user->commit();
+                        $order_menu->commit();
+                        $order_detail->commit();
+                        $product->commit();
+                        exit();
+                    }
+                }
+            } 
+            $data = [
+                'alert' => '結帳失敗',
+                'is_success' => false
+            ];
+            $user->rollback();
+            $order_menu->rollback();
+            $order_detail->rollback();
+            $product->rollback();
             echo json_encode($data);
         }
 
@@ -403,6 +427,7 @@
          */
         public function GET_shoppingHistory()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu = new OrderMenu;
@@ -413,11 +438,10 @@
                     $order_menu_item['order_menu_id']
                 );
             }
-            $smarty = new Smarty;
-            $smarty->assign('order_menu_list', $order_menu_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display('../views/shopping_history.html');
+            $this->smarty->assign('order_menu_list', $order_menu_list);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display('../views/shopping_history.html');
         }
 
         /*
@@ -425,6 +449,7 @@
          */
         public function GET_shoppingDetail()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu_id = $this->id;
@@ -436,12 +461,20 @@
                 $order_detail_list[$index]['image'] = $product_item['image'];
                 $order_detail_list[$index]['name'] = $product_item['name'];
             }
-            // var_dump($order_detail_list);
-            $smarty = new Smarty;
-            $smarty->assign('order_detail_list', $order_detail_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display('../views/shopping_detail.html');
+            $this->smarty->assign('order_detail_list', $order_detail_list);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display('../views/shopping_detail.html');
+        }
+
+        public function GET_test()
+        {
+            $this->isGet();
+            $product = new product;
+            $product->startTransaction();
+            $is_success = $product->updateStock(19, 15);
+            $product->rollback();
+            echo $is_success;
         }
     }
 

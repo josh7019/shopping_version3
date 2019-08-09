@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 19:10:52
+/* Smarty version 3.1.33, created on 2019-08-09 14:57:07
   from 'C:\xampp\htdocs\shopping\views\manager_add_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c033cb7be25_02847607',
+  'unifunc' => 'content_5d4d19436b4d06_87968810',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'd68bf6d8cbfd86cbac07844695f65740df8bf6f0' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_add_product.html',
-      1 => 1565262651,
+      1 => 1565333827,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c033cb7be25_02847607 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d19436b4d06_87968810 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -267,7 +267,7 @@ echo $_prefixVariable19;?>
             <div class="form-group">
                     <label class="col-md-4 control-label descript" for="price">庫存量</label><span class='descript' id='stock_signal'></span>  
                     <div class="col-md-4">
-                        <input id="price" name="stock" type="number" min="1" placeholder="請輸入庫存量" class="form-control input-md" required="">
+                        <input id="stock" name="stock" type="number" min="1" placeholder="請輸入庫存量" class="form-control input-md" required="">
                         <span class="help-block"></span> 
                     </div>
                 </div>

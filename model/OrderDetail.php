@@ -139,4 +139,19 @@
             );
             return $total_price['total_price'];
         }
+
+        /*
+         * 更新產品數量
+         */
+        public function getProductSaled($product_id)
+        {
+            $total_saled = $this->selectSingleWithWhere(
+                $this->table,
+                ['sum(amount) as total_saled'],
+                ['product_id'],
+                [$product_id],
+                'i'
+            );
+            return $total_saled['total_saled'];
+        }
     }

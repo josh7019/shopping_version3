@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 13:12:24
+/* Smarty version 3.1.33, created on 2019-08-09 17:15:44
   from 'C:\xampp\htdocs\shopping\views\shopping_car.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c03984675f3_84596362',
+  'unifunc' => 'content_5d4d39c0bf0641_84014075',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '98e6d6ef45b21254faf8fc54deb7ed7fbea8726f' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_car.html',
-      1 => 1565262706,
+      1 => 1565342001,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c03984675f3_84596362 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d39c0bf0641_84014075 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -445,12 +445,23 @@ echo $_prefixVariable44;?>
 
                         </td>
                         <td>
-                                <span class="pull-right" id="checkout_button">
-                                    <span class="btn btn-warning">
+                                <span class="pull-right" >
+                                    <button id="checkout_button" class="btn btn-warning"
+                                    <?php ob_start();
+if ($_smarty_tpl->tpl_vars['user_final_cash']->value < 0 || $_smarty_tpl->tpl_vars['total_price']->value <= 0) {
+$_prefixVariable45 = ob_get_clean();
+echo $_prefixVariable45;?>
+
+                                        disabled='disabled' 
+                                        <?php ob_start();
+}
+$_prefixVariable46 = ob_get_clean();
+echo $_prefixVariable46;?>
+>
                                         <span class="glyphicon glyphicon-usd">
                                         </span>
                                         結帳
-                                    </span>
+                                    </button>
                                 </span>
                             </td>
                     </tbody>
@@ -459,8 +470,8 @@ echo $_prefixVariable44;?>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable45 = ob_get_clean();
-echo $_prefixVariable45;?>
+$_prefixVariable47 = ob_get_clean();
+echo $_prefixVariable47;?>
 '>
         
         

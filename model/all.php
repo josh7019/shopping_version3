@@ -136,11 +136,11 @@
     /*
      * 寫上結帳價格
      */
-    function updateDealPriceAndStock($order_menu_id)
+    function updateDealPriceAndStock($order_detail, $product, $order_menu_id)
     {
-        $order_detail = new OrderDetail;
+        // $order_detail = new OrderDetail;
         $order_detail_list = $order_detail->getAllProduct($order_menu_id);
-        $product = new Product;
+        // $product = new Product;
         foreach ($order_detail_list as $order_detail_item) {
             ## 登錄結帳價格
             $product_item = $product->getOneProductOnSale($order_detail_item['product_id']);
@@ -155,7 +155,7 @@
             }
             $is_success_stock = $product->updateStock($order_detail_item['product_id'], $stock);
 
-            if (!is_success_deal_price || !$is_success_stock) {
+            if (!$is_success_deal_price || !$is_success_stock) {
                 return false;
                 exit();
             }

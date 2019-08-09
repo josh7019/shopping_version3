@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 19:12:11
+/* Smarty version 3.1.33, created on 2019-08-09 15:28:13
   from 'C:\xampp\htdocs\shopping\views\maneger_member.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c038bbd22a2_95330526',
+  'unifunc' => 'content_5d4d208d777733_39771009',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '45b2f92f1b8341371223961f5fa609138d0f1dd4' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_member.html',
-      1 => 1565262699,
+      1 => 1565335691,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c038bbd22a2_95330526 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4d208d777733_39771009 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -325,7 +325,11 @@ echo $_smarty_tpl->tpl_vars['user_item']->value['created_at'];
 $_prefixVariable30 = ob_get_clean();
 echo $_prefixVariable30;?>
 </td>
-                                <td>1000</td>
+                                <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['user_item']->value['total_price'];
+$_prefixVariable31 = ob_get_clean();
+echo $_prefixVariable31;?>
+</td>
                                 <td>
                                     <span class="pull-right update_button">
                                         <span class="btn btn-warning">
@@ -343,15 +347,15 @@ echo $_prefixVariable30;?>
                             </tr>
                             <?php ob_start();
 }
-$_prefixVariable31 = ob_get_clean();
-echo $_prefixVariable31;?>
+$_prefixVariable32 = ob_get_clean();
+echo $_prefixVariable32;?>
 
                         <?php ob_start();
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable32 = ob_get_clean();
-echo $_prefixVariable32;?>
+$_prefixVariable33 = ob_get_clean();
+echo $_prefixVariable33;?>
 
 
                     </tbody>

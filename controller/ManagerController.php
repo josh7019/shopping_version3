@@ -25,6 +25,7 @@
          */
         public function POST_login()
         {
+            $this->isPost();
             $account = $_POST['account'];
             $password = $_POST['password'];
             $check_tool = new CheckTool;
@@ -64,10 +65,16 @@
          */
         public function GET_product()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product;
             $product_list = $product->getAllProduct();
+            $order_detail = new OrderDetail;
+            foreach ($product_list as $index => $product_item) {
+                $total_saled = $order_detail->getProductSaled($product_item['product_id']);
+                $product_list[$index]['total_saled'] = $total_saled;
+            }
             $smarty = new Smarty;
             $smarty->assign('product_list', $product_list);
             $smarty->assign('permission', $user_item['permission']);
@@ -80,7 +87,7 @@
          */
         public function DELETE_product()
         {
-            // $product_id = $_POST['product_id'];
+            $this->isDelete();
             parse_str(file_get_contents('php://input'), $_DELETE);
             $product_id = $_DELETE['product_id'];
             $product = new Product;
@@ -107,7 +114,7 @@
          */
         public function POST_product()
         {
-            // $product_id = $_POST['product_id'];
+            $this->isPost();
             $product_id = $_POST['product_id'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -140,6 +147,7 @@
          */
         public function GET_addProduct()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $smarty = new Smarty;
@@ -153,7 +161,7 @@
          */
         public function POST_addProduct()
         {
-            
+            $this->isPost();
             $name = $_POST['name'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -175,6 +183,7 @@
          */
         public function GET_editProduct()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product();
@@ -191,13 +200,27 @@
          */
         public function GET_member()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
-            $user_item = getUser();
+            $manager_item = getUser();
             $user = new User;
+            $order_menu = new OrderMenu;
             $user_list = $user->getAllUser();
+            
+            foreach ($user_list as $index => $user_item) {
+                ## 取得使用者所有訂單
+                $order_menu_list = $order_menu->getOneUserAllMenuId($user_item['user_id']);
+                $total_price = 0;
+                foreach ($order_menu_list as $order_menu_index => $order_menu_item) {
+                    ##取得單一訂單總價
+                    $menu_price = getTotalPrice($order_menu_item['order_menu_id']);
+                    $total_price += $menu_price;
+                }
+                $user_list[$index]['total_price'] = $total_price;
+            }
             $smarty = new Smarty;
             $smarty->assign('user_list', $user_list);
-            $smarty->assign('permission', $user_item['permission']);
+            $smarty->assign('permission', $manager_item['permission']);
             $smarty->assign('is_login', $is_login);
             $smarty->display('../views/maneger_member.html');
         }
@@ -207,6 +230,7 @@
          */
         public function PUT_member()
         {
+            $this->isPut();
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_id = $_PUT['user_id'];
             $permission = $_PUT['permission'];
@@ -233,6 +257,7 @@
          */
         public function GET_orderMenu()
         {
+            $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu = new OrderMenu;
