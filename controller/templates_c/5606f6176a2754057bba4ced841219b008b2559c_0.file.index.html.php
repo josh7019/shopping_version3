@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-09 16:20:35
+/* Smarty version 3.1.33, created on 2019-08-12 16:09:29
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4d2cd3097926_48689397',
+  'unifunc' => 'content_5d511eb954b074_90003764',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565338833,
+      1 => 1565597368,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4d2cd3097926_48689397 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d511eb954b074_90003764 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,13 +52,16 @@ function content_5d4d2cd3097926_48689397 (Smarty_Internal_Template $_smarty_tpl)
         }
         body {
             font-family: arial,"Microsoft JhengHei","微軟正黑體",sans-serif !important;
-            color:#a6a6a6;
             background-color:#1c1c1c; 
         }
         #title {
             background-color:#660000;
             border-top-left-radius: 40px;
             border-top-right-radius: 40px
+        }
+        .row {
+            color:#a6a6a6;
+            
         }
     </style>
 </head>
@@ -94,7 +97,7 @@ $_prefixVariable3 = ob_get_clean();
 echo $_prefixVariable3;?>
 
                 <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable4 = ob_get_clean();
 echo $_prefixVariable4;?>
 
@@ -134,7 +137,7 @@ $_prefixVariable6 = ob_get_clean();
 echo $_prefixVariable6;?>
 
                     <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable7 = ob_get_clean();
 echo $_prefixVariable7;?>
 

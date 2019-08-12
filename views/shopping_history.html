@@ -73,7 +73,7 @@
                     {{else}}
                     <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                     {{/if}}
-                    {{if $permission == 5}}
+                    {{if $permission == 2}}
                     <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
                     <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
                     {{/if}}
@@ -101,7 +101,7 @@
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
                     {{if $is_login }}
-                        {{if $permission == 5}}
+                        {{if $permission == 2}}
                         
                         <li>
                             <a href="/shopping/controller/managercontroller.php/orderMenu">

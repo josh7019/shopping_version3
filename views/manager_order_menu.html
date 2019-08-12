@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/shopping/scripts/functions.js"></script>
+    <script src="/shopping/scripts/manager_order_menu.js"></script>
     <title>Document</title>
     <style>
         #head1 {
@@ -28,7 +29,7 @@
             background-color:#1c1c1c;
         }
         #button_colum {
-            width: 170px;
+            width: 240px;
         }
         th {
             text-align: center;
@@ -51,7 +52,6 @@
         legend {
             color: red;
         }
-        
     </style>
 </head>
 <body>
@@ -73,7 +73,7 @@
                     {{else}}
                     <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                     {{/if}}
-                    {{if $permission == 5}}
+                    {{if $permission == 2}}
                     <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
                     <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
                     {{/if}}
@@ -101,7 +101,7 @@
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
                     {{if $is_login }}
-                        {{if $permission == 5}}
+                        {{if $permission == 2}}
                         
                         <li>
                             <a href="/shopping/controller/managercontroller.php/orderMenu">
@@ -177,7 +177,22 @@
                                 <td>{{$order_menu_item['updated_at']}}</td>
                                 <td>{{$order_menu_item['total_price']}}</td>
                                 <td>
-                                    <span class="pull-right delete_button">
+                                    <span class="pull-right">
+                                        <span class='shipped_button'>
+                                        {{if $order_menu_item['is_shipped']}}
+                                            <input type='hidden' value="0">
+                                            <span class="btn btn-success">
+                                                <span class="glyphicon glyphicon-plane"></span>
+                                                <span>已出貨</span>
+                                            </span>
+                                        {{else}}
+                                            <input type='hidden' value="1">
+                                            <span class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-object-align-right"></span>
+                                                <span>待出貨</span>
+                                            </span>
+                                        {{/if}}
+                                        </span>
                                         <a href="/shopping/controller/usercontroller.php/shoppingdetail/{{$order_menu_item['order_menu_id']}}">
                                             <span class="btn btn-info">
                                                 <span class="glyphicon glyphicon-eye-open">
@@ -185,7 +200,7 @@
                                                 詳細資訊
                                             </span>
                                         </a>
-                                    </span>
+                                    </span> 
                                 </td>
                             </tr>
                         {{/foreach}}
@@ -201,6 +216,8 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" 
         crossorigin="anonymous">
+        </script>
+        <script>
         </script>
 </body>
 </html>

@@ -80,7 +80,44 @@
          */
         public function getAllOrderMenu()
         {
-            $order_menu_list = $this->selectAllWithWhere($this->table, ['*'], ['is_checkout'], [1], 'i');
+            $order_menu_list = $this->selectAllWithWhereDesc(
+                $this->table,
+                ['*'],
+                ['is_checkout'],
+                [1], 'i',
+                'order_menu_id'
+            );
             return $order_menu_list;
+        }
+
+        /*
+         * 更新出貨狀態
+         */
+        public function updateIsShipped($order_menu_id, $is_shipped)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['is_shipped'],
+                [$is_shipped],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'ii'
+            );
+            return $is_success;
+        }
+
+        /*
+         * 
+         */
+        public function getOneUserId($order_menu_id)
+        {
+            $user_id = $this->selectSingleWithWhere(
+                $this->table,
+                ['user_id'],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'i'
+            );
+            return $user_id['user_id'];
         }
     }

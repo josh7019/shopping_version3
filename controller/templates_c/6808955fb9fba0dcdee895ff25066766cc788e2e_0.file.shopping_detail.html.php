@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-09 14:27:27
+/* Smarty version 3.1.33, created on 2019-08-12 15:32:35
   from 'C:\xampp\htdocs\shopping\views\shopping_detail.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4d124f870553_94867697',
+  'unifunc' => 'content_5d51161341ce34_13637947',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6808955fb9fba0dcdee895ff25066766cc788e2e' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_detail.html',
-      1 => 1565332045,
+      1 => 1565594235,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4d124f870553_94867697 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d51161341ce34_13637947 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +116,7 @@ $_prefixVariable3 = ob_get_clean();
 echo $_prefixVariable3;?>
 
                     <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable4 = ob_get_clean();
 echo $_prefixVariable4;?>
 
@@ -156,7 +156,7 @@ $_prefixVariable6 = ob_get_clean();
 echo $_prefixVariable6;?>
 
                         <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable7 = ob_get_clean();
 echo $_prefixVariable7;?>
 

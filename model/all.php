@@ -5,6 +5,10 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderDetail.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderMenu.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/tools/CheckTool.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/controller.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/class/UserControllerClass.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/class/ManagerControllerClass.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/smarty/smarty_init.php');
     
     /*
      * 產生token
@@ -98,7 +102,7 @@
     /*
      * 檢查並更新購物車
      */
-    function checkAndGetOrderMenuId($user_item)
+    function GetOrderMenuId($user_item)
     {
         $user = new User;
         $order_menu = new OrderMenu;

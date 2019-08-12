@@ -22,9 +22,10 @@ window.onload = function () {
                 alert('請輸入不小於1的整數');
                 if (amount <= 0) {
                     e.target.value = 1;
+                    amount = e.target.value;
                 }
-                return ;
             }
+            
             changeAmount(e)
         }
     }
@@ -40,7 +41,6 @@ function deleteOne() {
         url : '/shopping/controller/usercontroller.php/product',
         data : {'product_id' : product_id},
         success : function(result_array) {
-            // console.log(result_array);
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             if (result_array['is_success']) {
@@ -73,7 +73,6 @@ function changeAmount(e) {
             'amount' : amount
         },
         success : function(result_array) {
-            console.log(result_array);
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             if (result_array['is_success'] == 1) {
@@ -100,10 +99,9 @@ function changeAmount(e) {
 
 function checkout() {
     $.ajax({
-        type : 'UPDATE',
+        type : 'PUT',
         url : '/shopping/controller/usercontroller.php/checkOut',
         success : function(result_array) {
-            console.log(result_array);
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             direct(result_array['location']);

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 19:12:18
+/* Smarty version 3.1.33, created on 2019-08-12 15:17:33
   from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c0392cce038_22926235',
+  'unifunc' => 'content_5d51128d70b253_07201841',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
-      1 => 1565262676,
+      1 => 1565594223,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c0392cce038_22926235 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d51128d70b253_07201841 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +33,9 @@ function content_5d4c0392cce038_22926235 (Smarty_Internal_Template $_smarty_tpl)
 >
     <?php echo '<script'; ?>
  src="/shopping/scripts/functions.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/manager_order_menu.js"><?php echo '</script'; ?>
 >
     <title>Document</title>
     <style>
@@ -55,7 +58,7 @@ function content_5d4c0392cce038_22926235 (Smarty_Internal_Template $_smarty_tpl)
             background-color:#1c1c1c;
         }
         #button_colum {
-            width: 170px;
+            width: 240px;
         }
         th {
             text-align: center;
@@ -78,7 +81,6 @@ function content_5d4c0392cce038_22926235 (Smarty_Internal_Template $_smarty_tpl)
         legend {
             color: red;
         }
-        
     </style>
 </head>
 <body>
@@ -113,7 +115,7 @@ $_prefixVariable3 = ob_get_clean();
 echo $_prefixVariable3;?>
 
                     <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable4 = ob_get_clean();
 echo $_prefixVariable4;?>
 
@@ -153,7 +155,7 @@ $_prefixVariable6 = ob_get_clean();
 echo $_prefixVariable6;?>
 
                         <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable7 = ob_get_clean();
 echo $_prefixVariable7;?>
 
@@ -302,11 +304,38 @@ $_prefixVariable24 = ob_get_clean();
 echo $_prefixVariable24;?>
 </td>
                                 <td>
-                                    <span class="pull-right delete_button">
-                                        <a href="/shopping/controller/usercontroller.php/shoppingdetail/<?php ob_start();
-echo $_smarty_tpl->tpl_vars['order_menu_item']->value['order_menu_id'];
+                                    <span class="pull-right">
+                                        <span class='shipped_button'>
+                                        <?php ob_start();
+if ($_smarty_tpl->tpl_vars['order_menu_item']->value['is_shipped']) {
 $_prefixVariable25 = ob_get_clean();
 echo $_prefixVariable25;?>
+
+                                            <input type='hidden' value="0">
+                                            <span class="btn btn-success">
+                                                <span class="glyphicon glyphicon-plane"></span>
+                                                <span>已出貨</span>
+                                            </span>
+                                        <?php ob_start();
+} else {
+$_prefixVariable26 = ob_get_clean();
+echo $_prefixVariable26;?>
+
+                                            <input type='hidden' value="1">
+                                            <span class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-object-align-right"></span>
+                                                <span>待出貨</span>
+                                            </span>
+                                        <?php ob_start();
+}
+$_prefixVariable27 = ob_get_clean();
+echo $_prefixVariable27;?>
+
+                                        </span>
+                                        <a href="/shopping/controller/usercontroller.php/shoppingdetail/<?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_menu_item']->value['order_menu_id'];
+$_prefixVariable28 = ob_get_clean();
+echo $_prefixVariable28;?>
 ">
                                             <span class="btn btn-info">
                                                 <span class="glyphicon glyphicon-eye-open">
@@ -314,15 +343,15 @@ echo $_prefixVariable25;?>
                                                 詳細資訊
                                             </span>
                                         </a>
-                                    </span>
+                                    </span> 
                                 </td>
                             </tr>
                         <?php ob_start();
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable26 = ob_get_clean();
-echo $_prefixVariable26;?>
+$_prefixVariable29 = ob_get_clean();
+echo $_prefixVariable29;?>
 
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
@@ -330,8 +359,8 @@ echo $_prefixVariable26;?>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable27 = ob_get_clean();
-echo $_prefixVariable27;?>
+$_prefixVariable30 = ob_get_clean();
+echo $_prefixVariable30;?>
 '>
         
         
@@ -343,6 +372,10 @@ echo $_prefixVariable27;?>
         src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" 
         crossorigin="anonymous">
+        <?php echo '</script'; ?>
+>
+        <?php echo '<script'; ?>
+>
         <?php echo '</script'; ?>
 >
 </body>
