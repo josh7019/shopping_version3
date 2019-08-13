@@ -138,15 +138,30 @@
             <div id="nowTime"></div>
             <div>
                 <!-- 抬頭 -->
+                    
                 <div id='addTodoList'>
-                    <form id='add_message_form' class="form-horizontal">
                         <fieldset>
                             <legend style="color:red;">商品管理</legend>
                         </fieldset>
                         <span class=pull-right><a href="/shopping/controller/managercontroller.php/addproduct" class="btn btn-success">新增產品</a></span>
-                    </form>
                 </div>
-
+                <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                        <select name="type" id="type" class="form-control">
+                            <option value="1">搜尋編號</option>
+                            <option value="2">搜尋名稱</option>
+                        </select>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="" name="search_value">
+                    </div>
+                    <button type="submit" class="btn btn-default" id='search'>搜尋商品</button>
+                    <select id="status" class="form-control">
+                            <option value=""></option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=0">待上架</option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=1">售賣中</option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=2">已下架</option>
+                    </select>
+                </form>
+                    
                 <!-- 商品顯示區 -->
                 <table class="table table-striped" id='showTodoList'>
                     <thead>

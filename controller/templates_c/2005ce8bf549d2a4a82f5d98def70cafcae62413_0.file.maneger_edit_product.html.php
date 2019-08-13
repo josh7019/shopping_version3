@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-12 14:56:01
+/* Smarty version 3.1.33, created on 2019-08-13 11:05:06
   from 'C:\xampp\htdocs\shopping\views\maneger_edit_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d510d81d8b747_01190865',
+  'unifunc' => 'content_5d5228e218cc94_21632782',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '2005ce8bf549d2a4a82f5d98def70cafcae62413' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_edit_product.html',
-      1 => 1565592960,
+      1 => 1565665504,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d510d81d8b747_01190865 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d5228e218cc94_21632782 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -97,7 +97,7 @@ $_prefixVariable3 = ob_get_clean();
 echo $_prefixVariable3;?>
 
                     <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable4 = ob_get_clean();
 echo $_prefixVariable4;?>
 
@@ -137,7 +137,7 @@ $_prefixVariable6 = ob_get_clean();
 echo $_prefixVariable6;?>
 
                         <?php ob_start();
-if ($_smarty_tpl->tpl_vars['permission']->value == 5) {
+if ($_smarty_tpl->tpl_vars['permission']->value == 2) {
 $_prefixVariable7 = ob_get_clean();
 echo $_prefixVariable7;?>
 
@@ -313,6 +313,15 @@ selected<?php ob_start();
 $_prefixVariable27 = ob_get_clean();
 echo $_prefixVariable27;?>
 >售賣中</option>
+                        <option value="2" <?php ob_start();
+if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 2) {
+$_prefixVariable28 = ob_get_clean();
+echo $_prefixVariable28;?>
+selected<?php ob_start();
+}
+$_prefixVariable29 = ob_get_clean();
+echo $_prefixVariable29;?>
+>已下架</option>
                     </select>
                 </div>
             </div>
@@ -323,8 +332,8 @@ echo $_prefixVariable27;?>
                     <div class="col-md-4">
                         <textarea name="descript" id="descript" cols="30" rows="5"><?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['descript'];
-$_prefixVariable28 = ob_get_clean();
-echo $_prefixVariable28;?>
+$_prefixVariable30 = ob_get_clean();
+echo $_prefixVariable30;?>
 </textarea>
                     </div>
             </div>

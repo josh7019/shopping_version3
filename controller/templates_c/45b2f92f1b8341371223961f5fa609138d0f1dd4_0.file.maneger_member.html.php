@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-12 16:15:27
+/* Smarty version 3.1.33, created on 2019-08-13 16:01:52
   from 'C:\xampp\htdocs\shopping\views\maneger_member.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d51201f76d5f2_24170815',
+  'unifunc' => 'content_5d526e704946d5_40446078',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '45b2f92f1b8341371223961f5fa609138d0f1dd4' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_member.html',
-      1 => 1565594230,
+      1 => 1565683285,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d51201f76d5f2_24170815 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d526e704946d5_40446078 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -248,6 +248,22 @@ echo $_prefixVariable19;?>
                             <legend style="color: red;">會員管理</legend>
                         </fieldset>
                     </form>
+                    <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                            <select name="type" id="type" class="form-control">
+                                <option value="0">搜尋編號</option>
+                                <option value="1">搜尋帳號</option>
+                                <option value="2">搜尋名稱</option>
+                            </select>
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="" name="search_value">
+                        </div>
+                        <button type="submit" class="btn btn-default" id='search'>搜尋使用者</button>
+                        <select id="status" class="form-control">
+                                <option value="">帳戶狀態</option>
+                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=0">正常</option>
+                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=1">凍結中</option>
+                        </select>
+                    </form>
                 </div><!-- 會員新增表格結束 -->
                 
                 <!-- 會員顯示區 -->
@@ -337,11 +353,6 @@ echo $_prefixVariable31;?>
                                             </span>
                                             確認修改
                                         </span>
-                                        <!-- <span class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove">
-                                            </span>
-                                            刪除
-                                        </span> -->
                                     </span>
                                 </td>
                             </tr>

@@ -18,10 +18,28 @@
             }
         }
         
-        // private function redirect($action)
-        // {
-        //     $this->$action();
-        // }
+        /*
+         * 前端重導
+         */
+        private function redirect($action, $alert)
+        {
+            $data = [
+                'alert' => $alert,
+                'is_success' => 2,
+                'location' => '/shopping/controller/usercontroller.php/' . $action
+            ];
+            echo json_encode($data);
+            exit();
+        }
+
+        /*
+         * 錯誤訊息
+         */
+        public function GET_error($error)
+        {
+            $this->smarty->assign('error', $error);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
+        }
 
         /*
          * 首頁
@@ -32,8 +50,15 @@
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product;
-            $product_list = $product->getAllProductOnSale();
             $order_detail = new OrderDetail;
+            ## 檢查是否搜尋
+            if (isset($_GET['search_value'])) {
+                $type = 'name';
+                $search_value = $_GET['search_value'];
+                $product_list = $product->searchProductOnSale($type, $_GET['search_value']);
+            } else {
+                $product_list = $product->getAllProductOnSale();
+            }
             foreach ($product_list as $index => $product_item) {
                 $total_saled = $order_detail->getProductSaled($product_item['product_id']);
                 $product_list[$index]['total_saled'] = $total_saled;
@@ -71,7 +96,11 @@
         public function GET_signup()
         {
             $this->isGet();
-            // 
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/signup.html');
         }
         
@@ -81,13 +110,8 @@
         public function POST_signup()
         {
             $this->isPost();
-            if (!checkToken()) {
-                $data = [
-                    'alert' => '請先登出再註冊',
-                    'location' => $_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/userController.php/index'
-                ];
-                echo json_encode($data);
-                exit();
+            if (checkToken()) {
+                $this->redirect('index', '請先登出再註冊');
             }
             $account = $_POST['account'];
             $password = $_POST['password'];
@@ -108,10 +132,7 @@
             $password = password_hash($password, PASSWORD_DEFAULT);
             $is_success = $user->signup($account, $password, $name, $id_number);
             if ($is_success) {
-                $data = [
-                    'alert' => '註冊成功',
-                    'location' => $_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/userController.php/login',
-                ];
+                $this->redirect('login', '註冊成功');
             } else {
                 $data = [
                     'alert' => '註冊失敗',
@@ -127,13 +148,20 @@
         public function GET_login()
         {
             $this->isGet();
-            // 
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/login.html');
         }
 
          public function POST_login()
         {
             $this->isPost();
+            if (checkToken()) {
+                $this->redirect('index', '重複登入');
+            }
             $account = $_POST['account'];
             $password = $_POST['password'];
             $check_tool = new CheckTool;
@@ -185,16 +213,14 @@
         public function DELETE_logout()
         {
             $this->isDelete();
-            setcookie ("token", "test", time()-100, '/');
+            if (!checkToken()) {
+                $this->redirect('login', '未登入');
+            }
             $user = new User;
             $user_item = getUser();
             $is_success = $user->addToken($user_item['account'], null);
-            $data = [
-                'alert' => '登出成功',
-                'location' => '/shopping/controller/userController.php/index',
-            ];
-            echo json_encode($data);
-            exit();
+            setcookie ("token", "test", time()-100, '/');
+            $this->redirect('index', '登出成功');
         }
 
         /*
@@ -248,13 +274,7 @@
             $this->isPost();
             ##檢查是否登入
             if (!checkToken()) {
-                $data = [
-                    'alert' => '請先登入',
-                    'is_success' => 2,
-                    'location' => '/shopping/controller/usercontroller.php/login'
-                ];
-                echo json_encode($data);
-                exit();
+                $this->redirect('login', '請先登入');
             }
             $product_id = $_POST['product_id'];
             $user = new User;
@@ -286,6 +306,10 @@
         public function DELETE_product()
         {
             $this->isDelete();
+            ##檢查是否登入
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             parse_str(file_get_contents('php://input'), $_DELETE);
             $user_item = getUser();
             $order_menu_id = GetOrderMenuId($user_item);
@@ -316,6 +340,10 @@
         public function PUT_product()
         {
             $this->isPut();
+            ##檢查是否登入
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_item = getUser();
             $order_menu_id = GetOrderMenuId($user_item);
@@ -387,6 +415,9 @@
         public function PUT_checkOut()
         {
             $this->isPut();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             $user_item = getUser();
             $total_price = getTotalPrice(GetOrderMenuId($user_item));
             $final_price= $user_item['cash'] - $total_price;
@@ -450,7 +481,7 @@
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu = new OrderMenu;
-            $order_menu_list = $order_menu->getOneUserAllMenuId($user_item['user_id']);
+            $order_menu_list = $order_menu->getOneUserAllMenuIdDesc($user_item['user_id']);
             $order_detail = new OrderDetail;
             foreach ($order_menu_list as $index => $order_menu_item) {
                 $order_menu_list[$index]['total_price'] = $order_detail->getOneMenuIdTotalPrice(
@@ -491,7 +522,7 @@
             ## 檢查訂單擁有者是否正確
             $order_menu = new OrderMenu;
             $user_id = $order_menu->getOneUserId($order_menu_id);
-            if ($user_id != $user_item['user_id']) {
+            if ($user_id != $user_item['user_id'] && $user_item['permission'] != 2) {
                 $this->GET_error(2);
                 exit();
             }
@@ -508,12 +539,6 @@
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/shopping_detail.html');
         }
-
-        public function GET_error($error)
-        {
-            $this->smarty->assign('error', $error);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
-        }
         
         public function GET_test()
         {
@@ -525,3 +550,4 @@
             echo $is_success;
         }
     }
+    

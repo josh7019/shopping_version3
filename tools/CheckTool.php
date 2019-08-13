@@ -5,7 +5,7 @@
         private $password_patt = '/^[a-zA-Z0-9]{4,20}$/';
         // private $name_patt = '/^[\u4e00-\u9fa5]{2,3}$/';
         private $id_number_patt = '/^[A-Z][12]\d{8}$/';
-        private $unsignInt = '/^0$|^[1-9]{1,}$/';
+        private $unsignInt = '/^0$|^[1-9][0-9]{1,}$/';
         /*
          * 檢查註冊表單
          */
@@ -95,3 +95,4 @@
             return ($is_right = preg_match($this->unsignInt, $number)) ? true : false;
         }
     }
+    

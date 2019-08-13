@@ -65,6 +65,21 @@
         }
 
         /*
+         * 搜尋產品
+         */
+        public function searchUser($colum, $value)
+        {
+            $user_list = $this->selectAllWithLike(
+                $this->table,
+                ['*'],
+                [$colum],
+                [$value],
+                's'
+            );
+            return $user_list;
+        }
+
+        /*
          * 更新權限
          */
         public function updatePermission($user_id, $permission)

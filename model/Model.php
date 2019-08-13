@@ -238,6 +238,104 @@
             return $resultItem;
         }
 
+        /*
+         * 使用Like where取得多筆資料
+         */
+        public function selectAllWithLikeWhere(
+            $table,
+            $select_list,
+            $where_colum_list,
+            $where_value_list,
+            $like_colum,
+            $like_value,
+            $type_string
+        ) {
+            $where_colum_string = '';
+            $where_value_string = '';
+            $select_string = '';
+            $like_value = "%{$like_value}%";
+            ## 組成select字串
+            foreach ($select_list as $select_single) {
+                $select_string .= $select_single.',';
+            }
+            ## 組成where字串
+            foreach ($where_colum_list as $where_colum) {
+                $where_colum_string .= $where_colum.',';
+            }
+            foreach ($where_value_list as $where_value) {
+                $where_value_string .= '?,';
+            }
+            ## 去逗號
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
+            ## 組成sql語法
+            $sql = "select $select_string 
+                    from $table 
+                    where ({$where_colum_string}) = ($where_value_string)
+                    and {$like_colum} like '$like_value'";
+            $pre = $this->mysqli->prepare($sql);
+            $pre->bind_param($type_string,...$where_value_list);
+            $pre->execute();
+            $result = $pre->get_result();
+            $resultList = [];
+            $resultItem = [];
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $resultItem[$key] = $value;
+                    }
+                    $resultList[] = $resultItem;
+                }
+            return $resultList;
+        }
+
+        /*
+         * 使用like取得多筆資料
+         */
+        public function selectAllWithLike(
+            $table,
+            $select_list,
+            $where_colum_list,
+            $where_value_list,
+            $type_string
+            ) {
+            $where_colum_string = '';
+            $where_value_string = '';
+            $select_string = '';
+            ## 組成select字串
+            foreach ($select_list as $select_single) {
+                $select_string .= $select_single.',';
+            }
+            ## 組成where字串
+            foreach ($where_colum_list as $where_colum) {
+                $where_colum_string .= $where_colum.',';
+            }
+            foreach ($where_value_list as $index => $where_value) {
+                $where_value_string .= '?,';
+                $where_value_list[$index] = "%{$where_value}%";
+            }
+            ## 去逗號
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
+            ## 組成sql語法
+            $sql = "select $select_string 
+                    from $table 
+                    where ({$where_colum_string}) like ($where_value_string)";
+            $pre = $this->mysqli->prepare($sql);
+            $pre->bind_param($type_string,...$where_value_list);
+            $pre->execute();
+            $result = $pre->get_result();
+            $resultList = [];
+            $resultItem = [];
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $resultItem[$key] = $value;
+                    }
+                    $resultList[] = $resultItem;
+                }
+            return $resultList;
+        }
 
         /*
          * 新增一筆資料
@@ -354,11 +452,12 @@
     }
 
     // $model = new model;
-    // $model->selectLastOneWithWhere(
-    //     'order_menu',
+    // $model->selectAllWithLikeWhere(
+    //     'product',
     //     ['*'],
-    //     ['user_id', 'is_checkout'],
-    //     [10, 0],
-    //     'ii',
-    //     'order_menu_id'
+    //     ['is_delete'],
+    //     [0],
+    //     'name',
+    //     '總動',
+    //     'i'
     // );

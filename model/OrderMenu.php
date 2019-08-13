@@ -76,6 +76,22 @@
         }
 
         /*
+         * 取得單一使用者所有訂單編號
+         */
+        public function getOneUserAllMenuIdDesc($user_id)
+        {
+            $order_menu_id_list = $this->selectAllWithWhereDesc(
+                $this->table,
+                ['order_menu_id', 'is_shipped', 'updated_at'],
+                ['user_id', 'is_checkout'],
+                [$user_id, 1],
+                'ii',
+                'order_menu_id'
+            );
+            return $order_menu_id_list;
+        }
+
+        /*
          * 取得所有訂單
          */
         public function getAllOrderMenu()
@@ -86,6 +102,23 @@
                 ['is_checkout'],
                 [1], 'i',
                 'order_menu_id'
+            );
+            return $order_menu_list;
+        }
+
+        /*
+         * 搜尋訂單
+         */
+        public function searchOrderMenu($colum, $value)
+        {
+            $order_menu_list = $this->selectAllWithLikeWhere(
+                $this->table,
+                ['*'],
+                ['is_checkout'],
+                [1],
+                $colum,
+                $value,
+                'i'
             );
             return $order_menu_list;
         }

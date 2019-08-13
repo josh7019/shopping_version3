@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-12 16:15:28
+/* Smarty version 3.1.33, created on 2019-08-13 15:31:15
   from 'C:\xampp\htdocs\shopping\views\manager_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d5120205000b3_52962285',
+  'unifunc' => 'content_5d526743423120_30307029',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '715e4840d826b58454bd968349ab543be0b2d37a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_product.html',
-      1 => 1565594225,
+      1 => 1565681473,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d5120205000b3_52962285 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d526743423120_30307029 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -243,15 +243,30 @@ echo $_prefixVariable19;?>
             <div id="nowTime"></div>
             <div>
                 <!-- 抬頭 -->
+                    
                 <div id='addTodoList'>
-                    <form id='add_message_form' class="form-horizontal">
                         <fieldset>
                             <legend style="color:red;">商品管理</legend>
                         </fieldset>
                         <span class=pull-right><a href="/shopping/controller/managercontroller.php/addproduct" class="btn btn-success">新增產品</a></span>
-                    </form>
                 </div>
-
+                <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                        <select name="type" id="type" class="form-control">
+                            <option value="1">搜尋編號</option>
+                            <option value="2">搜尋名稱</option>
+                        </select>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="" name="search_value">
+                    </div>
+                    <button type="submit" class="btn btn-default" id='search'>搜尋商品</button>
+                    <select id="status" class="form-control">
+                            <option value=""></option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=0">待上架</option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=1">售賣中</option>
+                            <option value="/shopping/controller/managercontroller.php/product?type=3&search_value=2">已下架</option>
+                    </select>
+                </form>
+                    
                 <!-- 商品顯示區 -->
                 <table class="table table-striped" id='showTodoList'>
                     <thead>

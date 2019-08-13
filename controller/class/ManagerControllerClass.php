@@ -4,11 +4,14 @@
     class ManagerController extends Controller
     {
         private $id;
-        
-        public function __construct($action, $id)
+        private $smarty;
+        private $query_string;
+        public function __construct($action, $id, $query_string)
         {
-            $this->checkPermission();
             $this->id = $id;
+            $this->smarty = new Smarty;
+            $this->query_string = $query_string;
+            $this->checkPermission();
             if (method_exists($this, $action)) {
                 $this->$action();
             } else {
@@ -18,17 +21,41 @@
         }
 
         /*
+         * 前端重導
+         */
+        private function redirect($action, $alert)
+        {
+            $data = [
+                'alert' => $alert,
+                'is_success' => false,
+                'location' => '/shopping/controller/usercontroller.php/' . $action
+            ];
+            echo json_encode($data);
+            exit();
+        }
+
+        /*
+         * 錯誤訊息
+         */
+        public function GET_error($error)
+        {
+            $this->smarty->assign('error', $error);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
+            exit();
+        }
+
+        /*
          * 檢查權限
          */
         private function checkPermission()
         {
-            $user_item = getUser();
-            if ($user_item['permission'] != 2) {
-                $_SERVER['REQUEST_METHOD'] = 'GET';
-                $method_action = 'GET_index';
-                $_SERVER['REQUEST_URI'] = 'shopping/controller/usercontroller.php/index';
-                new UserController($method_action, null);
-                exit();
+            if (checkToken()) {
+                $user_item = getUser();
+                if ($user_item['permission'] != 2) {
+                    $this->GET_error(3);
+                }
+            } else {
+                $this->GET_error(4);
             }
         }
 
@@ -81,17 +108,33 @@
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product;
-            $product_list = $product->getAllProduct();
             $order_detail = new OrderDetail;
+            ## 檢查是否搜尋
+            if (isset($_GET['type'])) {
+                switch ($_GET['type']) {
+                    case 1 : $type = 'product_id';
+                    break;
+                    case 2 : $type = 'name';
+                    break;
+                    case 3 : $type = 'status';
+                    break;
+                    default : $type = 'product_id';
+                }
+                $search_value = $_GET['search_value'];
+                $product_list = $product->searchProduct($type, $_GET['search_value']);
+            } else {
+                $product_list = $product->getAllProduct();
+            }
+
             foreach ($product_list as $index => $product_item) {
                 $total_saled = $order_detail->getProductSaled($product_item['product_id']);
                 $product_list[$index]['total_saled'] = $total_saled;
             }
-            $smarty = new Smarty;
-            $smarty->assign('product_list', $product_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_product.html');
+
+            $this->smarty->assign('product_list', $product_list);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_product.html');
         }
         
         /*
@@ -100,6 +143,9 @@
         public function DELETE_product()
         {
             $this->isDelete();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             parse_str(file_get_contents('php://input'), $_DELETE);
             $product_id = $_DELETE['product_id'];
             $product = new Product;
@@ -127,6 +173,9 @@
         public function POST_product()
         {
             $this->isPost();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             $product_id = $_POST['product_id'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -163,10 +212,10 @@
             $this->isGet();
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
-            $smarty = new Smarty;
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_add_product.html');
+            
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_add_product.html');
         }
         
         /*
@@ -175,6 +224,9 @@
         public function POST_addProduct()
         {
             $this->isPost();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             $name = $_POST['name'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -201,11 +253,11 @@
             $user_item = getUser();
             $product = new Product();
             $product_item = $product->getOneProduct($this->id);
-            $smarty = new Smarty;
-            $smarty->assign('product_item', $product_item);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_edit_product.html');
+            
+            $this->smarty->assign('product_item', $product_item);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_edit_product.html');
         }
 
          /*
@@ -218,8 +270,24 @@
             $manager_item = getUser();
             $user = new User;
             $order_menu = new OrderMenu;
-            $user_list = $user->getAllUser();
-            
+            ## 檢查是否搜尋
+            if (isset($_GET['type'])) {
+                switch ($_GET['type']) {
+                    case 0 : $type = 'user_id';
+                    break;
+                    case 1 : $type = 'account';
+                    break;
+                    case 2 : $type = 'name';
+                    break;
+                    case 3 : $type = 'permission';
+                    break;
+                    default : $type = 'user_id';
+                }
+                $search_value = $_GET['search_value'];
+                $user_list = $user->searchUser($type, $_GET['search_value']);
+            } else {
+                $user_list = $user->getAllUser();
+            }
             foreach ($user_list as $index => $user_item) {
                 ## 取得使用者所有訂單
                 $order_menu_list = $order_menu->getOneUserAllMenuId($user_item['user_id']);
@@ -231,11 +299,11 @@
                 }
                 $user_list[$index]['total_price'] = $total_price;
             }
-            $smarty = new Smarty;
-            $smarty->assign('user_list', $user_list);
-            $smarty->assign('permission', $manager_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_member.html');
+            
+            $this->smarty->assign('user_list', $user_list);
+            $this->smarty->assign('permission', $manager_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_member.html');
         }
 
         /*
@@ -244,6 +312,9 @@
         public function PUT_member()
         {
             $this->isPut();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_id = $_PUT['user_id'];
             $permission = $_PUT['permission'];
@@ -274,9 +345,23 @@
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu = new OrderMenu;
-            $order_menu_list = $order_menu->getAllOrderMenu();
             $user = new User;
             $order_detail = new OrderDetail;
+            ## 檢查是否搜尋
+            if (isset($_GET['type'])) {
+                switch ($_GET['type']) {
+                    case 0 : $type = 'order_menu_id';
+                    break;
+                    case 1 : $type = 'is_shipped';
+                    break;
+                    default : $type = 'order_menu_id';
+                }
+                    $search_value = $_GET['search_value'];
+                    $order_menu_list = $order_menu->searchOrderMenu($type, $_GET['search_value']);
+
+            } else {
+                $order_menu_list = $order_menu->getAllOrderMenu();
+            }
             foreach ($order_menu_list as $index => $order_menu_item) {
                 $order_menu_list[$index]['total_price'] = $order_detail->getOneMenuIdTotalPrice(
                     $order_menu_item['order_menu_id']
@@ -285,11 +370,11 @@
                 $order_menu_list[$index]['account'] = $user_account['account'];
             }
 
-            $smarty = new Smarty;
-            $smarty->assign('order_menu_list', $order_menu_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_order_menu.html');
+            
+            $this->smarty->assign('order_menu_list', $order_menu_list);
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_order_menu.html');
         }
 
         /*
@@ -298,6 +383,9 @@
         public function PUT_isShipped()
         {
             $this->isPut();
+            if (!checkToken()) {
+                $this->redirect('login', '請先登入');
+            }
             parse_str(file_get_contents('php://input'), $_PUT);
             $order_menu_id = $_PUT['order_menu_id'];
             $is_shipped = $_PUT['is_shipped'];
@@ -315,3 +403,4 @@
             echo json_encode($date);
         }
     }
+    

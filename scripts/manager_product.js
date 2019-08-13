@@ -1,6 +1,9 @@
 window.onload = function(){
     
     delete_product();
+    document.getElementById('status').onchange = function() {
+        window.location = document.getElementById('status').value;
+    }
 }
 
 
@@ -19,6 +22,7 @@ function delete_product(){
                         result_array = JSON.parse(result_array);
                         row.style.display = (result_array['is_success']) ? 'none' : 'block';
                         showSingal(result_array['alert']);
+                        direct(result_array['location']);
                     }
                 })
             }

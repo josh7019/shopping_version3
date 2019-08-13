@@ -47,7 +47,6 @@ function login()
         url : '/shopping/controller/UserController.php/login',
         data : data,
         success : function (result_array) {
-            console.log(result_array);
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             direct(result_array['location']);

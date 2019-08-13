@@ -60,6 +60,7 @@ function deleteOne() {
             } else {
                 row.style.display = 'none';
             }
+            direct(result_array['location']);
         }
     })
 }
@@ -92,7 +93,7 @@ function changeAmount(e) {
             } else if (result_array['is_success'] == 3) {
                 e.target.value = result_array['amount']
             }
-
+            direct(result_array['location']);
         }
     })
 }

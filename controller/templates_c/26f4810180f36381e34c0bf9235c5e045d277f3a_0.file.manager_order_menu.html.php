@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-12 15:17:33
+/* Smarty version 3.1.33, created on 2019-08-13 16:25:31
   from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d51128d70b253_07201841',
+  'unifunc' => 'content_5d5273fb4adc66_84390761',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
-      1 => 1565594223,
+      1 => 1565684715,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d51128d70b253_07201841 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d5273fb4adc66_84390761 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -260,8 +260,22 @@ echo $_prefixVariable19;?>
         <div class='container'>
             <div id="nowTime"></div>
             <div>
-                    <legend style = "color: red">購物紀錄</legend>
-                <!-- 會員顯示區 -->
+                    <legend style = "color: red">訂單管理</legend>
+                    <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                            <select name="type" id="type" class="form-control">
+                                <option value="0">搜尋編號</option>
+                            </select>
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="" name="search_value">
+                        </div>
+                        <button type="submit" class="btn btn-default" id='search'>搜尋訂單</button>
+                        <select id="status" class="form-control">
+                                <option value="">出貨狀態</option>
+                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
+                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
+                        </select>
+                    </form>
+                <!-- 訂單顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead id = 'head1'>
                         <tr>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-12 16:09:29
+/* Smarty version 3.1.33, created on 2019-08-13 17:09:02
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d511eb954b074_90003764',
+  'unifunc' => 'content_5d527e2e580076_81828358',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565597368,
+      1 => 1565687342,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d511eb954b074_90003764 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d527e2e580076_81828358 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -249,6 +249,23 @@ echo $_prefixVariable19;?>
     <hr>
     <div class="container" style='text-align:center; '>
         <div class='row'>
+                <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="" name="search_value">
+                    </div>
+                    <button type="submit" class="btn btn-default" id='search'>搜尋商品名稱</button>
+                </form>
+                <div class="col-md-12">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                            </ul>
+                        </nav>
+                    </div>
             <div class="col-md-12" id='title'>
                 <h2>商品目錄</h2>
             </div>

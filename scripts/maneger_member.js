@@ -1,6 +1,9 @@
 window.onload = function(){
     
     update_permission();
+    document.getElementById('status').onchange = function() {
+        window.location = document.getElementById('status').value;
+    }
 }
 
 
@@ -20,6 +23,7 @@ function update_permission(){
                         // console.log(result_array);
                         result_array = JSON.parse(result_array);
                         showSingal(result_array['alert']);
+                        direct(result_array['location']);
                     }
                 })
             }

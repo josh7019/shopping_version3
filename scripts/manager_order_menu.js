@@ -1,6 +1,9 @@
 window.onload = function(){
     
     changeShipped();
+    document.getElementById('status').onchange = function() {
+        window.location = document.getElementById('status').value;
+    }
 }
 
 
@@ -39,10 +42,9 @@ function changeShipped(){
                                 )
                             shipped_button.children[1].children[1].innerText = '待出貨';
                             }
-                            
-                        } else {
-                            alert('failed')
                         }
+                        showSingal(result_array['alert']);
+                        direct(result_array['location']);
                     }
                 })
         }

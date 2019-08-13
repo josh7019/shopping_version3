@@ -154,5 +154,4 @@
             );
             return $total_saled['total_saled'];
         }
-
     }

@@ -56,6 +56,40 @@
         }
 
         /*
+         * 搜尋產品
+         */
+        public function searchProduct($colum, $value)
+        {
+            $product_list = $this->selectAllWithLikeWhere(
+                $this->table,
+                ['*'],
+                ['is_delete'],
+                [0],
+                $colum,
+                $value,
+                'i'
+            );
+            return $product_list;
+        }
+
+        /*
+         * 搜尋產品
+         */
+        public function searchProductOnSale($colum, $value)
+        {
+            $product_list = $this->selectAllWithLikeWhere(
+                $this->table,
+                ['*'],
+                ['is_delete', 'status'],
+                [0, 1],
+                $colum,
+                $value,
+                'ii'
+            );
+            return $product_list;
+        }
+
+        /*
          * 取得一項未刪除產品
          */
         public function getOneProduct($product_id)

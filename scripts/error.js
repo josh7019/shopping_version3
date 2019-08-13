@@ -13,5 +13,13 @@ window.onload = function() {
             alert('訂單號碼不存在');
             window.location = '/shopping/controller/usercontroller.php/shoppingHistory';
             break;
+        case 3:
+            alert('權限錯誤');
+            window.location = '/shopping/controller/usercontroller.php/index';
+            break;
+        case 4:
+            alert('請先登入');
+            window.location = '/shopping/controller/usercontroller.php/index';
+            break;
     }
 }

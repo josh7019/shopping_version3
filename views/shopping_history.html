@@ -160,22 +160,26 @@
                 <table class="table table-striped" id='title'>
                     <thead id = 'head1'>
                         <tr>
-                            <th style="width:110px"></th>
-                            <th></th>
                             <th>訂單編號</th>
                             <th>結帳日期</th>
                             <th>商品總價</th>
+                            <th>出貨狀態</th>
                             <th id='button_colum'></th>
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
                         {{foreach $order_menu_list as $order_menu_item}}
                         <tr class="item-color-1">
-                                <td></td>
-                                <td></td>
                                 <td>{{$order_menu_item['order_menu_id']}}</td>
                                 <td>{{$order_menu_item['updated_at']}}</td>
                                 <td>{{$order_menu_item['total_price']}}</td>
+                                <td>
+                                    {{if $order_menu_item['is_shipped']}}
+                                    已出貨
+                                    {{else}}
+                                    備貨中
+                                    {{/if}}
+                                </td>
                                 <td>
                                     <span class="pull-right delete_button">
                                         <a href="/shopping/controller/usercontroller.php/shoppingdetail/{{$order_menu_item['order_menu_id']}}">
