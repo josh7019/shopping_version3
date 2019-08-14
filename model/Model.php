@@ -150,7 +150,57 @@
         }
 
         /*
-         * 使用where取得多筆資料
+         * 使用where取得多筆資料limit
+         */
+        public function selectAllWithWhereLimit(
+            $table,
+            $select_list,
+            $where_colum_list,
+            $where_value_list,
+            $type_string,
+            $page_number,
+            $how_much
+            ) {
+            $where_colum_string = '';
+            $where_value_string = '';
+            $select_string = '';
+            ## 組成select字串
+            foreach ($select_list as $select_single) {
+                $select_string .= $select_single.',';
+            }
+            ## 組成where字串
+            foreach ($where_colum_list as $where_colum) {
+                $where_colum_string .= $where_colum.',';
+            }
+            foreach ($where_value_list as $where_value) {
+                $where_value_string .= '?,';
+            }
+            ## 去逗號
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
+            ## 組成sql語法
+            $sql = "select $select_string 
+                    from $table 
+                    where ({$where_colum_string}) = ($where_value_string) 
+                    limit $page_number, $how_much";
+            $pre = $this->mysqli->prepare($sql);
+            $pre->bind_param($type_string,...$where_value_list);
+            $pre->execute();
+            $result = $pre->get_result();
+            $resultList = [];
+            $resultItem = [];
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $resultItem[$key] = $value;
+                    }
+                    $resultList[] = $resultItem;
+                }
+            return $resultList;
+        }
+
+        /*
+         * 使用where取得多筆資料降冪排序
          */
         public function selectAllWithWhereDesc(
             $table,
@@ -338,6 +388,60 @@
         }
 
         /*
+         * 使用Like where取得多筆資料
+         */
+        public function selectAllWithLikeWhereLimit(
+            $table,
+            $select_list,
+            $where_colum_list,
+            $where_value_list,
+            $like_colum,
+            $like_value,
+            $type_string,
+            $page_number,
+            $how_much
+        ) {
+            $where_colum_string = '';
+            $where_value_string = '';
+            $select_string = '';
+            $like_value = "%{$like_value}%";
+            ## 組成select字串
+            foreach ($select_list as $select_single) {
+                $select_string .= $select_single.',';
+            }
+            ## 組成where字串
+            foreach ($where_colum_list as $where_colum) {
+                $where_colum_string .= $where_colum.',';
+            }
+            foreach ($where_value_list as $where_value) {
+                $where_value_string .= '?,';
+            }
+            ## 去逗號
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
+            ## 組成sql語法
+            $sql = "select $select_string 
+                    from $table 
+                    where ({$where_colum_string}) = ($where_value_string)
+                    and {$like_colum} like '$like_value'
+                    limit {$page_number}, {$how_much}";
+            $pre = $this->mysqli->prepare($sql);
+            $pre->bind_param($type_string,...$where_value_list);
+            $pre->execute();
+            $result = $pre->get_result();
+            $resultList = [];
+            $resultItem = [];
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $resultItem[$key] = $value;
+                    }
+                    $resultList[] = $resultItem;
+                }
+            return $resultList;
+        }
+
+        /*
          * 新增一筆資料
          */
         public function insertInto($table, $insert_colum_list, $insert_value_list, $type_string)
@@ -422,6 +526,8 @@
             $pre->execute();
             return $pre->affected_rows;
         }
+
+
 
         /*
          * 啟動交易

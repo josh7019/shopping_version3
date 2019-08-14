@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-13 17:49:16
+/* Smarty version 3.1.33, created on 2019-08-14 09:55:43
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d52879ca396e7_43717656',
+  'unifunc' => 'content_5d536a1f3122b4_15825820',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565689755,
+      1 => 1565747740,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d52879ca396e7_43717656 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d536a1f3122b4_15825820 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -252,11 +252,63 @@ echo $_prefixVariable19;?>
                 <div class="col-md-12">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
+                                <?php ob_start();
+$_smarty_tpl->tpl_vars['page_number'] = new Smarty_Variable(null, $_smarty_tpl->isRenderingCache);$_smarty_tpl->tpl_vars['page_number']->step = 1;$_smarty_tpl->tpl_vars['page_number']->total = (int) ceil(($_smarty_tpl->tpl_vars['page_number']->step > 0 ? $_smarty_tpl->tpl_vars['page_amount']->value+1 - (1) : 1-($_smarty_tpl->tpl_vars['page_amount']->value)+1)/abs($_smarty_tpl->tpl_vars['page_number']->step));
+if ($_smarty_tpl->tpl_vars['page_number']->total > 0) {
+for ($_smarty_tpl->tpl_vars['page_number']->value = 1, $_smarty_tpl->tpl_vars['page_number']->iteration = 1;$_smarty_tpl->tpl_vars['page_number']->iteration <= $_smarty_tpl->tpl_vars['page_number']->total;$_smarty_tpl->tpl_vars['page_number']->value += $_smarty_tpl->tpl_vars['page_number']->step, $_smarty_tpl->tpl_vars['page_number']->iteration++) {
+$_smarty_tpl->tpl_vars['page_number']->first = $_smarty_tpl->tpl_vars['page_number']->iteration === 1;$_smarty_tpl->tpl_vars['page_number']->last = $_smarty_tpl->tpl_vars['page_number']->iteration === $_smarty_tpl->tpl_vars['page_number']->total;
+$_prefixVariable20 = ob_get_clean();
+echo $_prefixVariable20;?>
+
+                                <li>
+                                    <?php ob_start();
+if ($_smarty_tpl->tpl_vars['search']->value) {
+$_prefixVariable21 = ob_get_clean();
+echo $_prefixVariable21;?>
+
+                                    <a href="http://localhost/shopping/controller/usercontroller.php/index?search_value=<?php ob_start();
+echo $_smarty_tpl->tpl_vars['search_value']->value;
+$_prefixVariable22 = ob_get_clean();
+echo $_prefixVariable22;?>
+&page=<?php ob_start();
+echo $_smarty_tpl->tpl_vars['page_number']->value;
+$_prefixVariable23 = ob_get_clean();
+echo $_prefixVariable23;?>
+">
+                                        <?php ob_start();
+echo $_smarty_tpl->tpl_vars['page_number']->value;
+$_prefixVariable24 = ob_get_clean();
+echo $_prefixVariable24;?>
+
+                                    </a>
+                                    <?php ob_start();
+} else {
+$_prefixVariable25 = ob_get_clean();
+echo $_prefixVariable25;?>
+
+                                    <a href="http://localhost/shopping/controller/usercontroller.php/index?page=<?php ob_start();
+echo $_smarty_tpl->tpl_vars['page_number']->value;
+$_prefixVariable26 = ob_get_clean();
+echo $_prefixVariable26;?>
+">
+                                        <?php ob_start();
+echo $_smarty_tpl->tpl_vars['page_number']->value;
+$_prefixVariable27 = ob_get_clean();
+echo $_prefixVariable27;?>
+
+                                    </a>
+                                    <?php ob_start();
+}
+$_prefixVariable28 = ob_get_clean();
+echo $_prefixVariable28;?>
+
+                                </li>
+                                <?php ob_start();
+}
+}
+$_prefixVariable29 = ob_get_clean();
+echo $_prefixVariable29;?>
+
                             </ul>
                         </nav>
                     </div>
@@ -273,66 +325,66 @@ echo $_prefixVariable19;?>
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item', false, 'key');
 if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['product_item']->value) {
-$_prefixVariable20 = ob_get_clean();
-echo $_prefixVariable20;?>
+$_prefixVariable30 = ob_get_clean();
+echo $_prefixVariable30;?>
 
             <div class=col-md-3 style='background-color: #262626'>
                 <div class=col-md-12 ><b class='item_title'><?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['name'];
-$_prefixVariable21 = ob_get_clean();
-echo $_prefixVariable21;?>
+$_prefixVariable31 = ob_get_clean();
+echo $_prefixVariable31;?>
 </b></div>
                 <img src="/shopping/img/<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['image'];
-$_prefixVariable22 = ob_get_clean();
-echo $_prefixVariable22;?>
+$_prefixVariable32 = ob_get_clean();
+echo $_prefixVariable32;?>
 " alt="">
                 <div class=col-md-12 ><b class='item_price'>價格:NT<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
-$_prefixVariable23 = ob_get_clean();
-echo $_prefixVariable23;?>
+$_prefixVariable33 = ob_get_clean();
+echo $_prefixVariable33;?>
 </b></div>
                 <div class=col-md-12 ><b class='item_price'>庫存量:<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['stock'];
-$_prefixVariable24 = ob_get_clean();
-echo $_prefixVariable24;?>
+$_prefixVariable34 = ob_get_clean();
+echo $_prefixVariable34;?>
 </b></div>
 
                 <div class=col-md-12 ><b class='item_created_date'>上架日期:<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['updated_at'];
-$_prefixVariable25 = ob_get_clean();
-echo $_prefixVariable25;?>
+$_prefixVariable35 = ob_get_clean();
+echo $_prefixVariable35;?>
 </b></div>
                 <div class=col-md-12 >
                     <b class='item_saled'>已售出:
                         <?php ob_start();
 if ($_smarty_tpl->tpl_vars['product_item']->value['total_saled']) {
-$_prefixVariable26 = ob_get_clean();
-echo $_prefixVariable26;?>
+$_prefixVariable36 = ob_get_clean();
+echo $_prefixVariable36;?>
 
                             <?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['total_saled'];
-$_prefixVariable27 = ob_get_clean();
-echo $_prefixVariable27;?>
+$_prefixVariable37 = ob_get_clean();
+echo $_prefixVariable37;?>
 
                         <?php ob_start();
 } else {
-$_prefixVariable28 = ob_get_clean();
-echo $_prefixVariable28;?>
+$_prefixVariable38 = ob_get_clean();
+echo $_prefixVariable38;?>
 
                             0
                         <?php ob_start();
 }
-$_prefixVariable29 = ob_get_clean();
-echo $_prefixVariable29;?>
+$_prefixVariable39 = ob_get_clean();
+echo $_prefixVariable39;?>
 套
                     </b>
                 </div>
                 <div class=col-md-12 >
                     <input type="hidden" value = <?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
-$_prefixVariable30 = ob_get_clean();
-echo $_prefixVariable30;?>
+$_prefixVariable40 = ob_get_clean();
+echo $_prefixVariable40;?>
 >
                     <span class='btn btn-warning'>
                         <span class="glyphicon glyphicon-eye-open"></span> 商品資訊
@@ -346,8 +398,8 @@ echo $_prefixVariable30;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable31 = ob_get_clean();
-echo $_prefixVariable31;?>
+$_prefixVariable41 = ob_get_clean();
+echo $_prefixVariable41;?>
 
         </div>
     </div>

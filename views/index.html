@@ -147,11 +147,19 @@
                 <div class="col-md-12">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
+                                {{for $page_number = 1 to $page_amount}}
+                                <li>
+                                    {{if $search}}
+                                    <a href="http://localhost/shopping/controller/usercontroller.php/index?search_value={{$search_value}}&page={{$page_number}}">
+                                        {{$page_number}}
+                                    </a>
+                                    {{else}}
+                                    <a href="http://localhost/shopping/controller/usercontroller.php/index?page={{$page_number}}">
+                                        {{$page_number}}
+                                    </a>
+                                    {{/if}}
+                                </li>
+                                {{/for}}
                             </ul>
                         </nav>
                     </div>

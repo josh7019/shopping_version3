@@ -47,6 +47,33 @@
         }
 
         /*
+         * 取得所有售賣中產品數量
+         */
+        public function getAllProductOnSaleCount()
+        {
+            $product_list = $this->selectAllWithWhere($this->table, ['count(*)'], ['status', 'is_delete'], [1, 0], 'ii');
+            return $product_list[0]['count(*)'];
+        }
+
+        /*
+         * 取得所有售賣中產品
+         */
+        public function getAllProductOnSaleLimit($page_number, $how_much)
+        {
+            $page_number = ($page_number-1) * $how_much;
+            $product_list = $this->selectAllWithWhereLimit(
+                $this->table,
+                ['*'],
+                ['status', 'is_delete'],
+                [1, 0],
+                'ii',
+                $page_number,
+                $how_much
+            );
+            return $product_list;
+        }
+
+        /*
          * 取得所有產品
          */
         public function getAllProduct()
@@ -73,7 +100,7 @@
         }
 
         /*
-         * 搜尋產品
+         * 搜尋售賣中產品
          */
         public function searchProductOnSale($colum, $value)
         {
@@ -85,6 +112,43 @@
                 $colum,
                 $value,
                 'ii'
+            );
+            return $product_list;
+        }
+
+        /*
+         * 搜尋售賣中產品數量
+         */
+        public function searchProductOnSaleCount($colum, $value)
+        {
+            $product_list = $this->selectAllWithLikeWhere(
+                $this->table,
+                ['count(*)'],
+                ['is_delete', 'status'],
+                [0, 1],
+                $colum,
+                $value,
+                'ii'
+            );
+            return $product_list[0]['count(*)'];
+        }
+
+        /*
+         * 搜尋售賣中產品
+         */
+        public function searchProductOnSaleLimit($colum, $value, $page_number, $how_much)
+        {
+            $page_number = ($page_number-1) * $how_much;
+            $product_list = $this->selectAllWithLikeWhereLimit(
+                $this->table,
+                ['*'],
+                ['is_delete', 'status'],
+                [0, 1],
+                $colum,
+                $value,
+                'ii',
+                $page_number,
+                $how_much
             );
             return $product_list;
         }

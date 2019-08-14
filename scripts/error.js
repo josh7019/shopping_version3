@@ -21,5 +21,9 @@ window.onload = function() {
             alert('請先登入');
             window.location = '/shopping/controller/usercontroller.php/index';
             break;
+        case 5:
+            alert('錯誤請求');
+            window.location = '/shopping/controller/usercontroller.php/index';
+            break;
     }
 }

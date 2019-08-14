@@ -51,13 +51,34 @@
             $user_item = getUser();
             $product = new Product;
             $order_detail = new OrderDetail;
+            $check_tool = new CheckTool;
+            if (isset($_GET['page'])) {
+                $page_number = $_GET['page'];
+                $page_number = ($check_tool->checkUnsignIntNoZero($page_number)) ? $page_number : 1;
+            } else {
+                $page_number = 1;
+            }
             ## 檢查是否搜尋
             if (isset($_GET['search_value'])) {
                 $type = 'name';
                 $search_value = $_GET['search_value'];
-                $product_list = $product->searchProductOnSale($type, $_GET['search_value']);
+                $product_count = $product->searchProductOnSaleCount($type, $search_value);
+                $page_amount = ceil($product_count/4);
+                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
+                $product_list = $product->searchProductOnSaleLimit(
+                    $type,
+                    $search_value,
+                    $page_number,
+                    4
+                );
+                $search = true;
+                $this->smarty->assign('search_value', $search_value);
             } else {
-                $product_list = $product->getAllProductOnSale();
+                $product_count = $product->getAllProductOnSaleCount();
+                $page_amount = ceil($product_count/4);
+                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
+                $product_list = $product->getAllProductOnSaleLimit($page_number, 4);
+                $search = false;
             }
             foreach ($product_list as $index => $product_item) {
                 $total_saled = $order_detail->getProductSaled($product_item['product_id']);
@@ -71,6 +92,8 @@
                 $this->smarty->assign('order_detail_list_length', count($order_detail_list));
             }
             
+            $this->smarty->assign('search', $search);
+            $this->smarty->assign('page_amount', $page_amount);
             $this->smarty->assign('product_list', $product_list);
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('is_login', $is_login);

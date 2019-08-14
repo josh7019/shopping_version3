@@ -45,6 +45,9 @@ function deleteOne() {
             showSingal(result_array['alert']);
             if (result_array['is_success']) {
                 row.style.display = 'none';
+                let product_count = document.getElementById('product_count').innerText;
+                product_count = parseInt(product_count) - 1;
+                document.getElementById('product_count').innerText = product_count;
                 document.getElementById('total_price').innerHTML = 'NT' + result_array['total_price'];
                 if (result_array['user_final_cash'] >= 0) {
                     document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'];
