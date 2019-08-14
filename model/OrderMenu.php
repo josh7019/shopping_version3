@@ -42,6 +42,7 @@
                 [$order_menu_id],
                 'i'
             );
+            return $order_menu_item;
         }
 
         /*

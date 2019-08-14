@@ -47,5 +47,29 @@
                 exit();
             }
         }
+
+        /*
+         * 前端重導
+         */
+        protected function redirect($controller, $action, $alert)
+        {
+            $data = [
+                'alert' => $alert,
+                'is_success' => 2,
+                'location' => "/shopping/controller/$controller.php/{$action}"
+            ];
+            echo json_encode($data);
+            exit();
+        }
+
+        /*
+         * 送出錯誤訊息並導頁
+         */
+        public function GET_error($error)
+        {
+            $this->smarty->assign('error', $error);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
+            exit();
+        }
     }
     

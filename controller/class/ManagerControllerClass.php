@@ -20,10 +20,10 @@
                 }
             } else {
                 if (!checkToken()) {
-                    $this->redirect('login', '請先登入');
+                    $this->redirect('guestcontroller', 'login', '請先登入');
                 }
                 if (!$this->checkPermission()) {
-                    $this->redirect('index', '權限錯誤');
+                    $this->redirect('guestcontroller', 'index', '權限錯誤');
                 }
             };
             if (method_exists($this, $action)) {
@@ -31,45 +31,6 @@
             } else {
                 $action = 'GET_error';
                 $this->$action(5);
-            }
-        }
-
-        /*
-         * 前端重導
-         */
-        private function redirect($action, $alert)
-        {
-            $data = [
-                'alert' => $alert,
-                'is_success' => false,
-                'location' => '/shopping/controller/usercontroller.php/' . $action
-            ];
-            echo json_encode($data);
-            exit();
-        }
-
-        /*
-         * 錯誤訊息
-         */
-        public function GET_error($error)
-        {
-            $this->smarty->assign('error', $error);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
-            exit();
-        }
-
-        /*
-         * 檢查權限
-         */
-        private function checkPermission2()
-        {
-            if (checkToken()) {
-                $user_item = getUser();
-                if ($user_item['permission'] != 2) {
-                    $this->GET_error(3);
-                }
-            } else {
-                $this->GET_error(4);
             }
         }
 
@@ -93,7 +54,7 @@
             $check_tool = new CheckTool;
             $is_format_right = $check_tool->checkLoginFormat($account, $password);
             ## 檢查格式
-            if (!$is_format_right){
+            if (!$is_format_right) {
                 $data=[
                     'alert' => '格式錯誤',
                 ];
@@ -103,7 +64,7 @@
             $manager = new Manager;
             $manager_item = $manager->getAccount($account);
             ## 搜尋帳號
-            if (isset($manager_item['account'])){
+            if (isset($manager_item['account'])) {
                 if (password_verify($password, $manager_item['password'])) {
                     $token = produceToken();
                     $manager->addToken($account, $token);
@@ -166,9 +127,6 @@
         public function DELETE_product()
         {
             $this->isDelete();
-            // if (!checkToken()) {
-            //     $this->redirect('login', '請先登入');
-            // }
             parse_str(file_get_contents('php://input'), $_DELETE);
             $product_id = $_DELETE['product_id'];
             $product = new Product;
@@ -196,9 +154,6 @@
         public function POST_product()
         {
             $this->isPost();
-            // if (!checkToken()) {
-            //     $this->redirect('login', '請先登入');
-            // }
             $product_id = $_POST['product_id'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -247,9 +202,6 @@
         public function POST_addProduct()
         {
             $this->isPost();
-            // if (!checkToken()) {
-            //     $this->redirect('login', '請先登入');
-            // }
             $name = $_POST['name'];
             $price = $_POST['price'];
             $status = $_POST['status'];
@@ -335,9 +287,6 @@
         public function PUT_member()
         {
             $this->isPut();
-            // if (!checkToken()) {
-            //     $this->redirect('login', '請先登入');
-            // }
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_id = $_PUT['user_id'];
             $permission = $_PUT['permission'];
@@ -406,9 +355,6 @@
         public function PUT_isShipped()
         {
             $this->isPut();
-            // if (!checkToken()) {
-            //     $this->redirect('login', '請先登入');
-            // }
             parse_str(file_get_contents('php://input'), $_PUT);
             $order_menu_id = $_PUT['order_menu_id'];
             $is_shipped = $_PUT['is_shipped'];

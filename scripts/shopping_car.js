@@ -79,6 +79,7 @@ function changeAmount(e) {
         success : function(result_array) {
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
+            // 修改數量成功
             if (result_array['is_success'] == 1) {
                 document.getElementById('total_price').innerHTML = 'NT' + result_array['total_price'];
                 if (result_array['user_final_cash'] >= 0) {
@@ -91,10 +92,18 @@ function changeAmount(e) {
                 } else {
                     checkout_button.disabled = false;
                 }
+                // 商品已下架
             } else if (result_array['is_success'] == 2) {
                 row.style.display = 'none';
+                // 庫存量不足
             } else if (result_array['is_success'] == 3) {
-                e.target.value = result_array['amount']
+                e.target.value = result_array['amount'];
+                document.getElementById('total_price').innerHTML = 'NT' + result_array['total_price'];
+                if (result_array['user_final_cash'] >= 0) {
+                    document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'];
+                } else {
+                    document.getElementById('user_final_cash').innerHTML = result_array['user_final_cash'] + "(餘額不足)";
+                }
             }
             direct(result_array['location']);
         }

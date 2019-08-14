@@ -10,3 +10,4 @@
     $method = $_SERVER['REQUEST_METHOD'];
     $method_action = "{$method}_{$action}";
     new GuestController($method_action, $id, $query_string);
+    

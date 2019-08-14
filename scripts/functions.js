@@ -93,7 +93,6 @@ function direct(location) {
 
 // 檢查內容是否為空
 function checkContent(str){
-    // str = e.target.value;
     if (str.match(/\S{1,}/)) {
         return true;
     } else {

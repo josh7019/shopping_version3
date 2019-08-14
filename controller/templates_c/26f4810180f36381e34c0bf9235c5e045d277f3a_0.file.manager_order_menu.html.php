@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-13 16:25:31
+/* Smarty version 3.1.33, created on 2019-08-14 14:54:53
   from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d5273fb4adc66_84390761',
+  'unifunc' => 'content_5d53b03d053b46_17092034',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
-      1 => 1565684715,
+      1 => 1565765692,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d5273fb4adc66_84390761 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d53b03d053b46_17092034 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,7 +90,7 @@ function content_5d5273fb4adc66_84390761 (Smarty_Internal_Template $_smarty_tpl)
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="/shopping/controller/userController.php/index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/guestcontroller.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -101,8 +101,8 @@ if (!$_smarty_tpl->tpl_vars['is_login']->value) {
 $_prefixVariable1 = ob_get_clean();
 echo $_prefixVariable1;?>
 
-                    <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/guestcontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/guestcontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     <?php ob_start();
 } else {
 $_prefixVariable2 = ob_get_clean();
@@ -127,28 +127,9 @@ $_prefixVariable5 = ob_get_clean();
 echo $_prefixVariable5;?>
 
                     
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Action</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li role="separator" class="divider"></li>
-                          <li><a href="#">Separated link</a></li>
-                          <li role="separator" class="divider"></li>
-                          <li><a href="#">One more separated link</a></li>
-                        </ul>
-                      </li>
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left">
-                            <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="button" class="btn btn-default">搜尋商品</button>
-                    </form>
                     <?php ob_start();
 if ($_smarty_tpl->tpl_vars['is_login']->value) {
 $_prefixVariable6 = ob_get_clean();
@@ -273,6 +254,7 @@ echo $_prefixVariable19;?>
                                 <option value="">出貨狀態</option>
                                 <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
                                 <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
+                                <option value="/shopping/controller/managercontroller.php/orderMenu">所有訂單</option>
                         </select>
                     </form>
                 <!-- 訂單顯示區 -->

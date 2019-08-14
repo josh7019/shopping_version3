@@ -18,7 +18,8 @@
         /*
          * 取得全部資料
          */
-        public function selectAll($table, $select_list){
+        public function selectAll($table, $select_list)
+        {
             $select_string = '';
             foreach ($select_list as $select_single) {
                 $select_string .= $select_single.',';
@@ -43,7 +44,8 @@
         /*
          * 取得最後一筆資料
          */
-        public function selectLastOne($table, $select_list, $order_by_colum){
+        public function selectLastOne($table, $select_list, $order_by_colum)
+        {
             $select_string = '';
             foreach ($select_list as $select_single) {
                 $select_string .= $select_single.',';
@@ -556,14 +558,3 @@
             $this->mysqli->autocommit(TRUE);
         }
     }
-
-    // $model = new model;
-    // $model->selectAllWithLikeWhere(
-    //     'product',
-    //     ['*'],
-    //     ['is_delete'],
-    //     [0],
-    //     'name',
-    //     '總動',
-    //     'i'
-    // );

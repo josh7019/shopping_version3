@@ -10,6 +10,21 @@
         {
             $this->id = $id;
             $this->smarty = new Smarty;
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if (!checkToken()) {
+                    $this->GET_error(4);
+                }
+                if (!$this->checkPermission()) {
+                    $this->GET_error(6);
+                }
+            } else {
+                if (!checkToken()) {
+                    $this->redirect('guestcontroller', 'login', '未登入');
+                }
+                if (!$this->checkPermission()) {
+                    $this->redirect('guestcontroller', 'logout', '帳戶已凍結,請撥打分機號碼2116進行解鎖');
+                }
+            };
             if (method_exists($this, $action)) {
                 $this->$action();
             } else {
@@ -17,211 +32,14 @@
                 $this->$action();
             }
         }
-        
-        /*
-         * 前端重導
-         */
-        private function redirect($action, $alert)
-        {
-            $data = [
-                'alert' => $alert,
-                'is_success' => 2,
-                'location' => '/shopping/controller/usercontroller.php/' . $action
-            ];
-            echo json_encode($data);
-            exit();
-        }
 
         /*
-         * 錯誤訊息
+         * 檢查權限
          */
-        public function GET_error($error)
+        private function checkPermission()
         {
-            $this->smarty->assign('error', $error);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
-        }
-
-        /*
-         * 首頁
-         */
-        public function GET_index()
-        {
-            $this->isGet();
-            $is_login = (checkToken()) ? true : false;
-            $user_item = getUser();
-            $product = new Product;
-            $order_detail = new OrderDetail;
-            $check_tool = new CheckTool;
-            if (isset($_GET['page'])) {
-                $page_number = $_GET['page'];
-                $page_number = ($check_tool->checkUnsignIntNoZero($page_number)) ? $page_number : 1;
-            } else {
-                $page_number = 1;
-            }
-            ## 檢查是否搜尋
-            if (isset($_GET['search_value'])) {
-                $type = 'name';
-                $search_value = $_GET['search_value'];
-                $product_count = $product->searchProductOnSaleCount($type, $search_value);
-                $page_amount = ceil($product_count/4);
-                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
-                $product_list = $product->searchProductOnSaleLimit(
-                    $type,
-                    $search_value,
-                    $page_number,
-                    4
-                );
-                $search = true;
-                $this->smarty->assign('search_value', $search_value);
-            } else {
-                $product_count = $product->getAllProductOnSaleCount();
-                $page_amount = ceil($product_count/4);
-                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
-                $product_list = $product->getAllProductOnSaleLimit($page_number, 4);
-                $search = false;
-            }
-            foreach ($product_list as $index => $product_item) {
-                $total_saled = $order_detail->getProductSaled($product_item['product_id']);
-                $product_list[$index]['total_saled'] = $total_saled;
-            }
-            // 購物車中商品數量
-            if ($is_login) {
-                $order_menu_id = GetOrderMenuId($user_item);
-                $order_detail = new OrderDetail;
-                $order_detail_list = $order_detail->getAllProductId($order_menu_id);
-                $this->smarty->assign('order_detail_list_length', count($order_detail_list));
-            }
-            
-            $this->smarty->assign('search', $search);
-            $this->smarty->assign('page_amount', $page_amount);
-            $this->smarty->assign('product_list', $product_list);
-            $this->smarty->assign('permission', $user_item['permission']);
-            $this->smarty->assign('is_login', $is_login);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/index.html');
-        }
-          
-        /*
-         * 檢查帳號是否重複
-         */
-        public function POST_checkAccount()
-        {
-            $this->isPost();
-            $account = $_POST['account'];
-            $user = new User();
-            $user_account = $user->getAccount($account);
-            echo json_encode($user_account);
-            exit();
-        }
-
-        /*
-         * 註冊頁面
-         */
-        public function GET_signup()
-        {
-            $this->isGet();
-            $is_login = (checkToken()) ? true : false;
-            $user_item = getUser();
-
-            $this->smarty->assign('permission', $user_item['permission']);
-            $this->smarty->assign('is_login', $is_login);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/signup.html');
-        }
-        
-        /*
-         * 註冊
-         */
-        public function POST_signup()
-        {
-            $this->isPost();
-            if (checkToken()) {
-                $this->redirect('index', '請先登出再註冊');
-            }
-            $account = $_POST['account'];
-            $password = $_POST['password'];
-            $id_number = $_POST['id_number'];
-            $name = $_POST['name'];
-            $check_tool = new CheckTool;
-            $check_result = $check_tool->checkSignupFormat($account, $password, $name, $id_number);
-            ## 判斷格式是否正確
-            if (!$check_result) {
-                $data = [
-                    'alert' => '格式錯誤或帳號已存在',
-                ];
-                echo json_encode($data);
-                exit();
-            }
-
-            $user = new User;
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $is_success = $user->signup($account, $password, $name, $id_number);
-            if ($is_success) {
-                $this->redirect('login', '註冊成功');
-            } else {
-                $data = [
-                    'alert' => '註冊失敗',
-                ];
-            }
-            echo json_encode($data);
-            exit();
-        }
-
-        /*
-         * 登入
-         */
-        public function GET_login()
-        {
-            $this->isGet();
-            $is_login = (checkToken()) ? true : false;
-            $user_item = getUser();
-
-            $this->smarty->assign('permission', $user_item['permission']);
-            $this->smarty->assign('is_login', $is_login);
-            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/login.html');
-        }
-
-         public function POST_login()
-        {
-            $this->isPost();
-            if (checkToken()) {
-                $this->redirect('index', '重複登入');
-            }
-            $account = $_POST['account'];
-            $password = $_POST['password'];
-            $check_tool = new CheckTool;
-            $is_format_right = $check_tool->checkLoginFormat($account, $password);
-            ## 檢查格式
-            if (!$is_format_right) {
-                $data = [
-                    'alert' => '格式錯誤',
-                ];
-                echo json_encode($data);
-                exit();
-            }
-            
-            $user = new User;
-            $user_item = $user->getAccount($account);
-            ## 搜尋帳號
-            if (isset($user_item['account'])) {
-                if (password_verify($password, $user_item['password'])) {
-                    $token = produceToken();
-                    $user->addToken($account, $token);
-                    setcookie('token', $token, time() + 3600 ,'/');
-                    ##檢查並更新購物車
-                    GetOrderMenuId($user_item);
-                    $data = [
-                        'alert' => '登入成功',
-                        'location' => '/shopping/controller/userController.php/index',
-                    ];
-                    echo json_encode($data);
-                    exit();
-                } else {
-                    $data = [
-                        'alert' => '密碼錯誤',
-                    ];
-                    echo json_encode($data);
-                    exit();
-                }
-            }
+                $user_item = getUser();
+                return ($user_item['permission'] == 1) ? false :true;
         }
 
         /*
@@ -236,14 +54,11 @@
         public function DELETE_logout()
         {
             $this->isDelete();
-            if (!checkToken()) {
-                $this->redirect('login', '未登入');
-            }
             $user = new User;
             $user_item = getUser();
             $is_success = $user->addToken($user_item['account'], null);
             setcookie ("token", "test", time()-100, '/');
-            $this->redirect('index', '登出成功');
+            $this->redirect('guestcontroller', 'index', '登出成功');
         }
 
         /*
@@ -252,7 +67,6 @@
         public function GET_shoppingCar()
         {
             $this->isGet();
-
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             if ($is_login) {
@@ -295,17 +109,13 @@
         public function POST_addProduct()
         {
             $this->isPost();
-            ##檢查是否登入
-            if (!checkToken()) {
-                $this->redirect('login', '請先登入');
-            }
             $product_id = $_POST['product_id'];
             $user = new User;
             $user_item = $user->getUserByToken($_COOKIE['token']);
             $order_menu_id = GetOrderMenuId($user_item);
             $order_detail = new OrderDetail;
             $product_count = $order_detail->getOneCount($order_menu_id, $product_id);
-            if($product_count['count(*)']) {
+            if ($product_count['count(*)']) {
                 $data = [
                     'alert' => '產品已在購物車',
                     'is_success' => 0
@@ -329,10 +139,6 @@
         public function DELETE_product()
         {
             $this->isDelete();
-            ##檢查是否登入
-            if (!checkToken()) {
-                $this->redirect('login', '請先登入');
-            }
             parse_str(file_get_contents('php://input'), $_DELETE);
             $user_item = getUser();
             $order_menu_id = GetOrderMenuId($user_item);
@@ -363,10 +169,6 @@
         public function PUT_product()
         {
             $this->isPut();
-            ##檢查是否登入
-            if (!checkToken()) {
-                $this->redirect('login', '請先登入');
-            }
             parse_str(file_get_contents('php://input'), $_PUT);
             $user_item = getUser();
             $order_menu_id = GetOrderMenuId($user_item);
@@ -425,7 +227,7 @@
                 ];
             } else {
                 $data = [
-                    'alert' => '數量相同或商品不存在',
+                    'alert' => '',
                     'is_success' => 0
                 ];
             }
@@ -438,9 +240,6 @@
         public function PUT_checkOut()
         {
             $this->isPut();
-            if (!checkToken()) {
-                $this->redirect('login', '請先登入');
-            }
             $user_item = getUser();
             $total_price = getTotalPrice(GetOrderMenuId($user_item));
             $final_price= $user_item['cash'] - $total_price;
@@ -472,7 +271,7 @@
                         GetOrderMenuId($user_item);
                         $data = [
                             'alert' => '結帳成功,感謝您的光臨',
-                            'location' => '/shopping/controller/usercontroller.php/index',
+                            'location' => '/shopping/controller/guestcontroller.php/index',
                             'is_success' => true
                         ];
                         echo json_encode($data);
@@ -529,11 +328,7 @@
         public function GET_shoppingDetail()
         {
             $this->isGet();
-            ##檢查登入
-            if (!$is_login = (checkToken()) ? true : false) {
-                $this->GET_error(0);
-                exit();
-            }
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu_id = $this->id;
             ## 檢查訂單編號格式
@@ -544,11 +339,15 @@
             }
             ## 檢查訂單擁有者是否正確
             $order_menu = new OrderMenu;
-            $user_id = $order_menu->getOneUserId($order_menu_id);
-            if ($user_id != $user_item['user_id'] && $user_item['permission'] != 2) {
-                $this->GET_error(2);
-                exit();
+            @$user_id = $order_menu->getOneUserId($order_menu_id);
+            $order_menu_item = $order_menu->getOneBYOrderMenuId($order_menu_id);
+            if ($user_item['permission'] != 2) {
+                if ($user_id != $user_item['user_id'] || $order_menu_item['is_checkout'] == 0) {
+                    $this->GET_error(2);
+                    exit();
+                }
             }
+            
             $order_detail = new OrderDetail;
             $order_detail_list = $order_detail->getAllProduct($order_menu_id);
             $product = new Product;

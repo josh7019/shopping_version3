@@ -92,8 +92,6 @@ function issubmit(){
 function submit(){
     var formData=new FormData(add_product);
     console.log(formData);
-    // formData.append('img',$('#file')[0].files[0])
-    // formData.append("code",$("#code").val())
     $.ajax({
             url:'/shopping/Controller/ManagerController.php/addProduct',
             type:'post',
@@ -103,14 +101,11 @@ function submit(){
             contentType: false,
             data:formData,
             success:function(result_array){  
-                console.log(result_array);
                 result_array = JSON.parse(result_array);
-                console.log(result_array);
                 showSingal(result_array['alert']);
                 direct(result_array['location']);
             },
             error:function(){
-            console.log("上傳失敗")
             }
         })
     }

@@ -62,13 +62,12 @@ function checkAccountFormat(e){
         // ajax 到後端檢查帳號是否存在
         $.ajax({
             type:'post',
-            url:'/shopping/controller/UserController.php/checkAccount',
+            url:'/shopping/controller/guestController.php/checkAccount',
             data:{
                 account:e.target.value,
                 action:'checkAccount',
             },
             success:function(user_account){
-                console.log(user_account);
                 user_account = JSON.parse(user_account)
                 if(user_account['account']){
                     isAccountRight=false;
@@ -128,12 +127,10 @@ function submitSignup(){
     };
     $.ajax({
         type : 'post',
-        url : '/shopping/controller/UserController.php/signup',
+        url : '/shopping/controller/guestController.php/signup',
         data : data,
         success : function (result_array) {
-            // console.log(result_array);
             result_array = JSON.parse(result_array);
-            // console.log(result_array);
             showSingal(result_array['alert']);
             direct(result_array['location']);
         }

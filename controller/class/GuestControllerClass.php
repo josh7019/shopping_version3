@@ -19,6 +19,7 @@
             }
         }
 
+
         /*
          * 首頁
          */
@@ -41,21 +42,23 @@
                 $type = 'name';
                 $search_value = $_GET['search_value'];
                 $product_count = $product->searchProductOnSaleCount($type, $search_value);
-                $page_amount = ceil($product_count/4);
+                $page_amount = ceil($product_count/8);
+                $page_amount = ($page_amount == 0) ? 1 : $page_amount;
                 $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
                 $product_list = $product->searchProductOnSaleLimit(
                     $type,
                     $search_value,
                     $page_number,
-                    4
+                    8
                 );
                 $search = true;
                 $this->smarty->assign('search_value', $search_value);
             } else {
                 $product_count = $product->getAllProductOnSaleCount();
-                $page_amount = ceil($product_count/4);
+                $page_amount = ceil($product_count/8);
+                $page_amount = ($page_amount == 0) ? 1 : $page_amount;
                 $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
-                $product_list = $product->getAllProductOnSaleLimit($page_number, 4);
+                $product_list = $product->getAllProductOnSaleLimit($page_number, 8);
                 $search = false;
             }
             foreach ($product_list as $index => $product_item) {
@@ -70,6 +73,7 @@
                 $this->smarty->assign('order_detail_list_length', count($order_detail_list));
             }
             
+            $this->smarty->assign('now_page', $page_number);
             $this->smarty->assign('search', $search);
             $this->smarty->assign('page_amount', $page_amount);
             $this->smarty->assign('product_list', $product_list);
@@ -97,6 +101,9 @@
         public function GET_signup()
         {
             $this->isGet();
+            if (checkToken()) {
+                $this->GET_error(7);
+            }
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
 
@@ -112,7 +119,7 @@
         {
             $this->isPost();
             if (checkToken()) {
-                $this->redirect('index', '請先登出再註冊');
+                $this->redirect('guestcontroller', 'index', '請先登出再註冊');
             }
             $account = $_POST['account'];
             $password = $_POST['password'];
@@ -133,7 +140,7 @@
             $password = password_hash($password, PASSWORD_DEFAULT);
             $is_success = $user->signup($account, $password, $name, $id_number);
             if ($is_success) {
-                $this->redirect('login', '註冊成功');
+                $this->redirect('guestcontroller', 'login', '註冊成功');
             } else {
                 $data = [
                     'alert' => '註冊失敗',
@@ -149,6 +156,9 @@
         public function GET_login()
         {
             $this->isGet();
+            if (checkToken()) {
+                $this->GET_error(7);
+            }
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
 
@@ -161,7 +171,7 @@
         {
             $this->isPost();
             if (checkToken()) {
-                $this->redirect('index', '重複登入');
+                $this->redirect('guestcontroller', 'index', '重複登入');
             }
             $account = $_POST['account'];
             $password = $_POST['password'];
@@ -186,12 +196,7 @@
                     setcookie('token', $token, time() + 3600 ,'/');
                     ##檢查並更新購物車
                     GetOrderMenuId($user_item);
-                    $data = [
-                        'alert' => '登入成功',
-                        'location' => '/shopping/controller/userController.php/index',
-                    ];
-                    echo json_encode($data);
-                    exit();
+                    $this->redirect('guestcontroller', 'index', '登入成功');
                 } else {
                     $data = [
                         'alert' => '密碼錯誤',
@@ -202,6 +207,7 @@
             }
         }
 
+        
         /*
          * 登出
          */
@@ -214,13 +220,10 @@
         public function DELETE_logout()
         {
             $this->isDelete();
-            if (!checkToken()) {
-                $this->redirect('login', '未登入');
-            }
             $user = new User;
             $user_item = getUser();
             $is_success = $user->addToken($user_item['account'], null);
             setcookie ("token", "test", time()-100, '/');
-            $this->redirect('index', '登出成功');
+            $this->redirect('guestcontroller', 'index', '已登出');
         }
     }

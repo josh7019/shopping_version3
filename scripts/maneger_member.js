@@ -20,7 +20,6 @@ function update_permission(){
                     url : '/shopping/controller/managercontroller.php/member',
                     data : {'user_id' : user_id, 'permission' : permission},
                     success : function (result_array){
-                        // console.log(result_array);
                         result_array = JSON.parse(result_array);
                         showSingal(result_array['alert']);
                         direct(result_array['location']);

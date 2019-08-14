@@ -8,6 +8,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/controller.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/class/UserControllerClass.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/class/ManagerControllerClass.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/controller/class/GuestControllerClass.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/smarty/smarty_init.php');
     
     /*
@@ -48,21 +49,22 @@
      */
     function getUser()
     {
-        if(checkToken()){
+        if (checkToken()) {
             if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
-            $user_model = new User;
-            $user_item = $user_model->getUserByToken($token);
-            if ($user_item['user_id']) {
-                return $user_item;
+                $token = $_COOKIE['token'];
+                $user_model = new User;
+                $user_item = $user_model->getUserByToken($token);
+                if ($user_item['user_id']) {
+                    return $user_item;
+                }
             }
-        }
         }
         
     }
 
 
-    function uploadImage($product_item){
+    function uploadImage($product_item)
+    {
         $files = $_FILES["image"];
         $product = new Product;
             // echo json_encode($files);

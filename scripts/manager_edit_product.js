@@ -94,7 +94,6 @@ function issubmit(){
 
 function submit(){
     var formData=new FormData(edit_product);
-    console.log(formData);
     $.ajax({
             url:'/shopping/Controller/ManagerController.php/Product',
             type:'POST',
