@@ -165,17 +165,17 @@
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $order_menu_list as $order_menu_item}}
+                        {{foreach from = $order_menu_list key = key item = order_menu_item}}
                         <tr class="item-color-1">
                                 <td></td>
-                                <td>{{$order_menu_item['order_menu_id']}}</td>
-                                <td>{{$order_menu_item['account']}}</td>
-                                <td>{{$order_menu_item['updated_at']}}</td>
-                                <td>{{$order_menu_item['total_price']}}</td>
+                                <td>{{$order_menu_item.order_menu_id}}</td>
+                                <td>{{$order_menu_item.account}}</td>
+                                <td>{{$order_menu_item.updated_at}}</td>
+                                <td>{{$order_menu_item.total_price}}</td>
                                 <td>
                                     <span class="pull-right">
                                         <span class='shipped_button'>
-                                        {{if $order_menu_item['is_shipped']}}
+                                        {{if $order_menu_item.is_shipped}}
                                             <input type='hidden' value="0">
                                             <span class="btn btn-success">
                                                 <span class="glyphicon glyphicon-plane"></span>

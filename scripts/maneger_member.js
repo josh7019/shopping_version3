@@ -1,9 +1,13 @@
 window.onload = function(){
     
     update_permission();
-    document.getElementById('status').onchange = function() {
-        window.location = document.getElementById('status').value;
+    document.getElementById('search_status').onchange = function() {
+    window.location = document.getElementById('search_status').value;
     }
+    // document.getElementById(status).onchange = function() {
+    //     let count = 0;
+
+    // }
 }
 
 

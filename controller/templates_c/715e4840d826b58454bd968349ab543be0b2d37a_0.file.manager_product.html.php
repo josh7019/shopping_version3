@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 16:16:23
+/* Smarty version 3.1.33, created on 2019-08-14 16:57:06
   from 'C:\xampp\htdocs\shopping\views\manager_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d53c357e4fd86_25591826',
+  'unifunc' => 'content_5d53cce22933e4_43470976',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '715e4840d826b58454bd968349ab543be0b2d37a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_product.html',
-      1 => 1565770579,
+      1 => 1565772712,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d53c357e4fd86_25591826 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d53cce22933e4_43470976 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -49,7 +49,8 @@ function content_5d53c357e4fd86_25591826 (Smarty_Internal_Template $_smarty_tpl)
             body {
             font-family: arial,"Microsoft JhengHei","微軟正黑體",sans-serif !important;
             color:#a6a6a6;
-            background-color:#1c1c1c; 
+            background-color:#1c1c1c;
+            word-wrap:break-all; 
             }
             th {
             text-align: center;
@@ -265,9 +266,9 @@ echo $_prefixVariable19;?>
                     </thead>
                     <tbody id='messageArea'>
                         <?php ob_start();
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item');
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item', false, 'key');
 if ($_from !== null) {
-foreach ($_from as $_smarty_tpl->tpl_vars['product_item']->value) {
+foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['product_item']->value) {
 $_prefixVariable20 = ob_get_clean();
 echo $_prefixVariable20;?>
 

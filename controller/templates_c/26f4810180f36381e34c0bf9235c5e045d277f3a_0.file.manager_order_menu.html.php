@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 14:54:53
+/* Smarty version 3.1.33, created on 2019-08-14 16:56:52
   from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d53b03d053b46_17092034',
+  'unifunc' => 'content_5d53ccd47c0529_81224747',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
-      1 => 1565765692,
+      1 => 1565773012,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d53b03d053b46_17092034 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d53ccd47c0529_81224747 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -271,9 +271,9 @@ echo $_prefixVariable19;?>
                     </thead>
                     <tbody id='itemArea'>
                         <?php ob_start();
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['order_menu_list']->value, 'order_menu_item');
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['order_menu_list']->value, 'order_menu_item', false, 'key');
 if ($_from !== null) {
-foreach ($_from as $_smarty_tpl->tpl_vars['order_menu_item']->value) {
+foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['order_menu_item']->value) {
 $_prefixVariable20 = ob_get_clean();
 echo $_prefixVariable20;?>
 

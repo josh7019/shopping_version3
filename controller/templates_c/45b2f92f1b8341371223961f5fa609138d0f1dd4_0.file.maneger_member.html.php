@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 14:56:38
+/* Smarty version 3.1.33, created on 2019-08-14 18:05:25
   from 'C:\xampp\htdocs\shopping\views\maneger_member.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d53b0a6819e28_35730207',
+  'unifunc' => 'content_5d53dce5675dd6_05522731',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '45b2f92f1b8341371223961f5fa609138d0f1dd4' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_member.html',
-      1 => 1565765797,
+      1 => 1565777124,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d53b0a6819e28_35730207 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d53dce5675dd6_05522731 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -238,7 +238,7 @@ echo $_prefixVariable19;?>
                           <input type="text" class="form-control" placeholder="" name="search_value">
                         </div>
                         <button type="submit" class="btn btn-default" id='search'>搜尋使用者</button>
-                        <select id="status" class="form-control">
+                        <select id="search_status" class="form-control">
                                 <option value="">帳戶狀態</option>
                                 <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=0">正常</option>
                                 <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=1">凍結中</option>
@@ -263,9 +263,9 @@ echo $_prefixVariable19;?>
                     </thead>
                     <tbody id='messageArea'>
                         <?php ob_start();
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['user_list']->value, 'user_item');
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['user_list']->value, 'user_item', false, 'key');
 if ($_from !== null) {
-foreach ($_from as $_smarty_tpl->tpl_vars['user_item']->value) {
+foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['user_item']->value) {
 $_prefixVariable20 = ob_get_clean();
 echo $_prefixVariable20;?>
 
@@ -329,7 +329,7 @@ echo $_prefixVariable31;?>
 </td>
                                 <td>
                                     <span class="pull-right update_button">
-                                        <span class="btn btn-warning">
+                                        <span class="btn btn-warning" >
                                             <span class="glyphicon glyphicon-pencil">
                                             </span>
                                             確認修改

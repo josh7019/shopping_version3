@@ -150,12 +150,12 @@
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $order_detail_list as $order_detail_item}}
+                        {{foreach from = $order_detail_list key = key item = $order_detail_item}}
                             <tr class="item-color-1">
                                 <td><img src="/shopping/img/{{$order_detail_item['image']}}" alt=""></td>
-                                <td>{{$order_detail_item['name']}}</td>
-                                <td>{{$order_detail_item['deal_price']}}</td>
-                                <td>{{$order_detail_item['amount']}}</td>
+                                <td>{{$order_detail_item.name}}</td>
+                                <td>{{$order_detail_item.deal_price}}</td>
+                                <td>{{$order_detail_item.amount}}</td>
                                 <td></td>
                                 <td>
                                 </td>
