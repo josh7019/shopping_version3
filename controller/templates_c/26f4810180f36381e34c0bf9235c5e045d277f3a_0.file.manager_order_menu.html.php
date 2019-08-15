@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 16:56:52
+/* Smarty version 3.1.33, created on 2019-08-15 09:33:33
   from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d53ccd47c0529_81224747',
+  'unifunc' => 'content_5d54b66dbbdc67_35987527',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
-      1 => 1565773012,
+      1 => 1565832813,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d53ccd47c0529_81224747 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d54b66dbbdc67_35987527 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -242,6 +242,13 @@ echo $_prefixVariable19;?>
             <div id="nowTime"></div>
             <div>
                     <legend style = "color: red">訂單管理</legend>
+                    <span class="pull-right">
+                        <select id="status" class="form-control">
+                            <option value="">出貨狀態</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu">所有訂單</option>
+                    </select></span>
                     <form class="navbar-form navbar-left" role="search" method="GET" action="">
                             <select name="type" id="type" class="form-control">
                                 <option value="0">搜尋編號</option>
@@ -249,13 +256,9 @@ echo $_prefixVariable19;?>
                         <div class="form-group">
                           <input type="text" class="form-control" placeholder="" name="search_value">
                         </div>
-                        <button type="submit" class="btn btn-default" id='search'>搜尋訂單</button>
-                        <select id="status" class="form-control">
-                                <option value="">出貨狀態</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu">所有訂單</option>
-                        </select>
+                        <button type="submit" class="btn btn-info" id='search'>
+                            <span class="glyphicon glyphicon-search"></span> 搜尋
+                        </button>
                     </form>
                 <!-- 訂單顯示區 -->
                 <table class="table table-striped" id='title'>

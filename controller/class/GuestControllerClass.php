@@ -26,6 +26,7 @@
         public function GET_index()
         {
             $this->isGet();
+            $cells = 4;
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product;
@@ -42,23 +43,23 @@
                 $type = 'name';
                 $search_value = $_GET['search_value'];
                 $product_count = $product->searchProductOnSaleCount($type, $search_value);
-                $page_amount = ceil($product_count/2);
+                $page_amount = ceil($product_count/$cells);
                 $page_amount = ($page_amount == 0) ? 1 : $page_amount;
                 $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
                 $product_list = $product->searchProductOnSaleLimit(
                     $type,
                     $search_value,
                     $page_number,
-                    2
+                    $cells
                 );
                 $search = true;
                 $this->smarty->assign('search_value', $search_value);
             } else {
                 $product_count = $product->getAllProductOnSaleCount();
-                $page_amount = ceil($product_count/2);
+                $page_amount = ceil($product_count/$cells);
                 $page_amount = ($page_amount == 0) ? 1 : $page_amount;
                 $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
-                $product_list = $product->getAllProductOnSaleLimit($page_number, 2);
+                $product_list = $product->getAllProductOnSaleLimit($page_number, $cells);
                 $search = false;
             }
             foreach ($product_list as $index => $product_item) {

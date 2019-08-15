@@ -3,9 +3,18 @@
     {
         private $account_patt = "/^[a-zA-Z][a-zA-Z0-9]{6,20}$/";
         private $password_patt = '/^[a-zA-Z0-9]{4,20}$/';
+        private $name_patt = '/^[a-zA-Z]{2,10}$/';
         private $id_number_patt = '/^[A-Z][12]\d{8}$/';
         private $unsignInt = '/^0$|^[1-9][0-9]{1,}$/';
         private $unsignIntNoZero = '/^[1-9]{1,}[0-9]{0,}$/';
+        
+        /*
+         * 檢查名稱格式
+         */
+        public function checkName($name) {
+            $result_name = preg_match($this->name_patt, $name);
+            return $result_name;
+        }
         /*
          * 檢查註冊表單
          */
@@ -13,14 +22,14 @@
         {
             $result_account = $this->checkAccount($account);
             $result_password = preg_match($this->password_patt, $password);
-            $result_name = true;
+            $result_name = preg_match($this->$name_patt, $name);
             $result_id_number = $this->checkIdNumber($id_number);
             return ($result_account && $result_password && $result_name && $result_id_number) ? true : false;
         }
 
         
         /*
-         * 檢查註冊表單
+         * 檢查登入表單
          */
         public function checkLoginFormat($account, $password)
         {
@@ -101,5 +110,7 @@
         {
             return ($is_right = preg_match($this->unsignIntNoZero, $number)) ? true : false;
         }
+
+        
     }
     

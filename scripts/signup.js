@@ -28,10 +28,10 @@ function isSubmit(){
     if (isAccountRight && isPasswordRight && isPasswordTwice && isIdNumberRight && isNameRight) {
         login_button.onclick = function(){submitSignup()};
     } else {
-        login_button.onclick=function(){alert(isAccountRight + ""+ isPasswordRight + isPasswordTwice + isIdNumberRight + isNameRight);return false;};
+        login_button.onclick=function(){return false;};
     }
 }
-
+// alert(isAccountRight + ""+ isPasswordRight + isPasswordTwice + isIdNumberRight + isNameRight);
 // 檢查身分證
 function checkIdNumber(e){
     id = e.target.value.toUpperCase();
@@ -39,7 +39,7 @@ function checkIdNumber(e){
     if (isIdNumberRight) {
         document.getElementById('id_number_Signal').innerText='ok';
     } else {
-        document.getElementById('id_number_Signal').innerText='錯誤';
+        document.getElementById('id_number_Signal').innerText='x';
     }
     isSubmit();
 }
@@ -51,7 +51,7 @@ function checkName(e){
     if (isNameRight) {
         document.getElementById('name_Signal').innerText='ok';
     } else {
-        document.getElementById('name_Signal').innerText='錯誤';
+        document.getElementById('name_Signal').innerText='x';
     }
     isSubmit();
 }

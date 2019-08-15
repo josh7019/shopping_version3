@@ -122,6 +122,13 @@
                         <!-- Form Name -->
                             <legend style="color: red;">會員管理</legend>
                         </fieldset>
+                        <span class="pull-right">
+                            <select id="search_status" class="form-control">
+                                <option value="">帳戶狀態</option>
+                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=0">正常</option>
+                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=1">凍結中</option>
+                                <option value="/shopping/controller/managercontroller.php/member">所有會員</option>
+                        </select></span>
                     </form>
                     <form class="navbar-form navbar-left" role="search" method="GET" action="">
                             <select name="type" id="type" class="form-control">
@@ -132,13 +139,10 @@
                         <div class="form-group">
                           <input type="text" class="form-control" placeholder="" name="search_value">
                         </div>
-                        <button type="submit" class="btn btn-default" id='search'>搜尋使用者</button>
-                        <select id="search_status" class="form-control">
-                                <option value="">帳戶狀態</option>
-                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=0">正常</option>
-                                <option value="/shopping/controller/managercontroller.php/member?type=3&search_value=1">凍結中</option>
-                                <option value="/shopping/controller/managercontroller.php/member">所有會員</option>
-                        </select>
+                        <button type="submit" class="btn btn-info" id='search'>
+                            <span class="glyphicon glyphicon-search"></span> 搜尋
+                        </button>
+                        
                     </form>
                 </div><!-- 會員新增表格結束 -->
                 

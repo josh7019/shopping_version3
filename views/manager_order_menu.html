@@ -137,6 +137,13 @@
             <div id="nowTime"></div>
             <div>
                     <legend style = "color: red">訂單管理</legend>
+                    <span class="pull-right">
+                        <select id="status" class="form-control">
+                            <option value="">出貨狀態</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
+                            <option value="/shopping/controller/managercontroller.php/orderMenu">所有訂單</option>
+                    </select></span>
                     <form class="navbar-form navbar-left" role="search" method="GET" action="">
                             <select name="type" id="type" class="form-control">
                                 <option value="0">搜尋編號</option>
@@ -144,13 +151,9 @@
                         <div class="form-group">
                           <input type="text" class="form-control" placeholder="" name="search_value">
                         </div>
-                        <button type="submit" class="btn btn-default" id='search'>搜尋訂單</button>
-                        <select id="status" class="form-control">
-                                <option value="">出貨狀態</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=0">待出貨</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu?type=1&search_value=1">已出貨</option>
-                                <option value="/shopping/controller/managercontroller.php/orderMenu">所有訂單</option>
-                        </select>
+                        <button type="submit" class="btn btn-info" id='search'>
+                            <span class="glyphicon glyphicon-search"></span> 搜尋
+                        </button>
                     </form>
                 <!-- 訂單顯示區 -->
                 <table class="table table-striped" id='title'>

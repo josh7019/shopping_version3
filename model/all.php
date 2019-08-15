@@ -77,7 +77,7 @@
                 $filepath = $_SERVER['DOCUMENT_ROOT']."/shopping/img/" . $filename;
                 //檢查目錄是否存在
                 if (!file_exists($filepath)) {
-                    $is_upload=move_uploaded_file($files["tmp_name"], $filepath);//存放檔案
+                    $is_upload = move_uploaded_file($files["tmp_name"], $filepath);//存放檔案
                     $product->updateImage($product_item['product_id'], $filename);
                     $data = [
                         'alert' => '新增產品及圖片成功',
@@ -97,7 +97,7 @@
                     echo json_encode($data);
                     exit();
                 }
-            }    
+            }
         }
     }
 

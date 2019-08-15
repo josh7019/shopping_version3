@@ -300,7 +300,7 @@
                 ];
             } else {
                 $data = [
-                    'alert' => '修改失敗',
+                    'alert' => '資料無異動',
                     'location' => '',
                     'is_success' => false,
                 ];

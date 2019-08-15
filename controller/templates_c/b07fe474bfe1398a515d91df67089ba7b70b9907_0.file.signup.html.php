@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 07:36:53
+/* Smarty version 3.1.33, created on 2019-08-15 04:01:50
   from 'C:\xampp\htdocs\shopping\views\signup.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d539df535a2b1_42446058',
+  'unifunc' => 'content_5d54bd0e29bb64_76756605',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b07fe474bfe1398a515d91df67089ba7b70b9907' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\signup.html',
-      1 => 1565761006,
+      1 => 1565834508,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d539df535a2b1_42446058 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d54bd0e29bb64_76756605 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -242,9 +242,10 @@ echo $_prefixVariable19;?>
                 </div>
             </div>
             <div class="form-group">
-                    <label class="col-md-4 control-label" for="password">姓名</label><span id='name_Signal'></span>
+                    <label class="col-md-4 control-label" for="password">暱稱</label><span id='name_Signal'></span>
                     <div class="col-md-4">
-                        <input value="封封*" id="name" name="name" type="text" placeholder="請輸入姓名" class="form-control input-md" required="">
+                        <input value="" id="name" name="name" type="text" placeholder="請輸入姓名" class="form-control input-md" required="">
+                        <span class="help-block">2~10字元,全英文,不得有符號</span> 
                     </div>
                 </div>
             <div class="form-group">

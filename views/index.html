@@ -55,13 +55,15 @@
                 <li><a href="/shopping/controller/guestcontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                 {{else}}
                 <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span>登出</a></li>
-                <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-briefcase"></span>儲值</a></li>
-                <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-pencil"></span>修改個人資料</a></li>
+                    {{if $permission == 2}}
+                    <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
+                    {{else}}
+                    <li><a href="/shopping/controller/usercontroller.php/addMoney"><span class="glyphicon glyphicon-briefcase"></span>儲值</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/userInfo"><span class="glyphicon glyphicon-pencil"></span>修改個人資料</a></li>
+                    {{/if}}
                 {{/if}}
-                {{if $permission == 2}}
-                <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
-                <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
-                {{/if}}
+                
                 
             </ul>
             
@@ -184,7 +186,7 @@
                     <!-- <span class='btn btn-warning'>
                         <span class="glyphicon glyphicon-eye-open"></span> 商品資訊
                     </span> -->
-                    <button class='btn btn-info add_button' {{if $product_item.stock <= 0}} disabled {{/if}}>
+                    <button class='btn btn-info add_button' {{if $product_item.stock <= 0 || $permission == 2}} disabled {{/if}}>
                         <span class="glyphicon glyphicon-shopping-cart"></span> 加入購物車
                     </button>
                 </div>

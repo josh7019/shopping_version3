@@ -62,6 +62,113 @@
         }
 
         /*
+         * 個人資料頁面
+         */
+        public function GET_userInfo()
+        {
+            $this->isGet();
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_info.html');
+        }
+
+        /*
+         * 修改密碼頁面
+         */
+        public function GET_changePassword()
+        {
+            $this->isGet();
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_change_password.html');
+        }
+
+        /*
+         * 修改密碼
+         */
+        public function PUT_changePassword()
+        {
+            $this->isPut();
+            $check_tool = new CheckTool;
+            // $check_tool->checkName()
+        }
+
+        /*
+         * 修改暱稱頁面
+         */
+        public function GET_changeName()
+        {
+            $this->isGet();
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_change_name.html');
+        }
+        
+        /*
+         * 修改暱稱
+         */
+        public function PUT_changeName()
+        {
+            $this->isPut();
+            $user_item = getUser();
+            parse_str(file_get_contents('php://input'), $_PUT);
+            $name = $_PUT['name'];
+            $check_tool = new CheckTool;
+            $is_right = $check_tool->checkName($name);
+            if ($is_right) {
+                $user = new User;
+                $is_success = $user->changeName($user_item['user_id'], $name);
+                if ($is_success) {
+                    $data = [
+                        'alert' => '修改成功',
+                        'location' => '/shopping/controller/usercontroller.php/userInfo',
+                        'is_success' => true
+                    ];
+                } else {
+                    $data = [
+                        'alert' => '資料無異動',
+                        'location' => '/shopping/controller/usercontroller.php/userInfo',
+                        'is_success' => false
+                    ];
+                }
+            } else {
+                $data = [
+                    'alert' => '格式錯誤',
+                    'location' => '/shopping/controller/usercontroller.php/userInfo',
+                    'is_success' => false
+                ];
+            }
+            echo json_encode($data);
+        }
+
+        /*
+         * 儲值頁面
+         */
+        public function GET_addMoney()
+        {
+            $this->isGet();
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            
+            $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('is_login', $is_login);
+            $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/add_money.html');
+        }
+
+        /*
          * 購物車頁面
          */
         public function GET_shoppingCar()
@@ -241,7 +348,8 @@
         {
             $this->isPut();
             $user_item = getUser();
-            $total_price = getTotalPrice(GetOrderMenuId($user_item));
+            $order_menu_id = GetOrderMenuId($user_item);
+            $total_price = getTotalPrice($order_menu_id);
             $final_price= $user_item['cash'] - $total_price;
             ## 檢查餘額是否足夠
             if ($final_price < 0) {
@@ -256,7 +364,6 @@
             $order_detail = new OrderDetail;
             $user = new User;
             $product = new Product;
-            $order_menu_id = GetOrderMenuId($user_item);
             ##交易流程開始
             $user->startTransaction();
             $order_menu->startTransaction();
@@ -285,7 +392,8 @@
             } 
             $data = [
                 'alert' => '結帳失敗',
-                'is_success' => false
+                'is_success' => false,
+                'location' => '/shopping/controller/usercontroller.php/shoppingcar'
             ];
             $user->rollback();
             $order_menu->rollback();

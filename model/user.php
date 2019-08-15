@@ -15,6 +15,15 @@
         }
 
         /*
+         * 取得帳號所有資料
+         */
+        public function getUserByAccount($account)
+        {
+            $user_item = $this->selectSingleWithWhere($this->table, ['*'], ['account'], [$account], 's');
+            return $user_item;
+        }
+
+        /*
          * 註冊
          */
         public function signup($account, $password, $name, $id_number)
@@ -24,6 +33,38 @@
                 ['account', 'password', 'name', 'id_number'],
                 [$account, $password, $name, $id_number],
                 'ssss'
+            );
+            return $is_success;
+        }
+
+        /*
+         * 修改密碼
+         */
+        public function changePassword($user_id, $password)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['password'],
+                [$password],
+                ['user_id'],
+                [$user_id],
+                'si'
+            );
+            return $is_success;
+        }
+
+        /*
+         * 修改暱稱
+         */
+        public function changeName($user_id, $name)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['name'],
+                [$name],
+                ['user_id'],
+                [$user_id],
+                'si'
             );
             return $is_success;
         }

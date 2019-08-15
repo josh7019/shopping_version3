@@ -59,7 +59,7 @@ function checkIdNumberFormat(id){
 
 // 檢查姓名格式
 function checkNameFormat(name){
-    if (name.match(/^[\u4e00-\u9fa5]{2,4}$/)) {
+    if (name.match(/^[a-zA-Z]{2,10}$/)) {
         return true; 
     } else {    
         return false;
