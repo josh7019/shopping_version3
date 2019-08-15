@@ -24,6 +24,15 @@
         }
 
         /*
+         * 取得密碼
+         */
+        public function getPasswordByAccount($account)
+        {
+            $user_item = $this->selectSingleWithWhere($this->table, ['password'], ['account'], [$account], 's');
+            return $user_item;
+        }
+
+        /*
          * 註冊
          */
         public function signup($account, $password, $name, $id_number)
@@ -179,6 +188,22 @@
                 ['user_id'],
                 [$user_id],
                 'i'
+            );
+            return $is_success;
+        }
+
+        /*
+         * 儲值
+         */
+        public function updateCash($user_id, $cash)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['cash'],
+                [$cash],
+                ['user_id'],
+                [$user_id],
+                'ii'
             );
             return $is_success;
         }

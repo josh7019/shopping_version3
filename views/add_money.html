@@ -9,7 +9,7 @@
         integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src='/shopping/scripts/functions.js'></script>
-        <script type="text/javascript" src=''></script>
+        <script type="text/javascript" src='/shopping/scripts/add_money.js'></script>
         <title>Document</title>
         <style>
             .myform {
@@ -36,6 +36,9 @@
             }
             #login_form {
                 background-color: #262626
+            }
+            #add_money_form {
+                display: none;
             }
         </style>
     </head>
@@ -128,31 +131,28 @@
             <form id='login_form' class="form-horizontal myform" >
             <fieldset>
             <!-- Form Name -->
-            <legend id='title'>登入</legend>
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Account">帳號</label>  
-                <div class="col-md-4">
-                    <input id="account" name="account" type="text" placeholder="請輸入帳號" class="form-control input-md" required>
-                </div>
-            </div>
+            <legend id='title'>加值</legend>
 
             <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="password">密碼</label>  
+            <div class="form-group" id='password_form'>
+                <label class="col-md-4 control-label" for="password">密碼</label>
+                <button type="button" class="btn btn-success" id="password_button">確認</button>
                 <div class="col-md-4">
                     <input id="password" name="password" type="password" placeholder="請輸入密碼" class="form-control input-md" required>
+                    
                 </div>
             </div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="signin"></label>
+            <!-- Text input-->
+            <div class="form-group" id='add_money_form'>
+                <label class="col-md-4 control-label" for="Account">加值額度</label>
+                <button id='add_money_button' type='button' class="btn btn-info">加值</button>
                 <div class="col-md-4">
-                    <button id='login_button' type='button' id="signin" name="signin" class="btn btn-info">登入</button>
-                    <a href="/shopping/controller/guestcontroller.php/signup" class='btn btn-success'>註冊</a>
+                    <input id="add_money" min='1' max='9999999' name="add_money" type="number" placeholder="請輸入加值金額" class="form-control input-md" required>
+                    <span class="help-block">1~999999(十萬)</span> 
                 </div>
             </div>
+ 
             </fieldset>
             </form>
         </div>

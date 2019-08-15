@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-14 16:56:10
+/* Smarty version 3.1.33, created on 2019-08-15 19:18:24
   from 'C:\xampp\htdocs\shopping\views\shopping_car.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d53ccaa96f2d5_69992899',
+  'unifunc' => 'content_5d553f8045f9a3_71173742',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '98e6d6ef45b21254faf8fc54deb7ed7fbea8726f' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_car.html',
-      1 => 1565772970,
+      1 => 1565867903,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d53ccaa96f2d5_69992899 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d553f8045f9a3_71173742 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -340,10 +340,14 @@ echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
 $_prefixVariable33 = ob_get_clean();
 echo $_prefixVariable33;?>
 </td>
-                                    <td><input class='amount' type='number' min='1' value="<?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['amount'];
+                                    <td><input class='amount' type='number' min='1' max='<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['stock'];
 $_prefixVariable34 = ob_get_clean();
 echo $_prefixVariable34;?>
+' value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['amount'];
+$_prefixVariable35 = ob_get_clean();
+echo $_prefixVariable35;?>
 " style="width:50px"></td>
                                     <td>
                                         <span class="pull-right delete_button">
@@ -357,20 +361,20 @@ echo $_prefixVariable34;?>
                                 </tr>
                                 <?php ob_start();
 }
-$_prefixVariable35 = ob_get_clean();
-echo $_prefixVariable35;?>
+$_prefixVariable36 = ob_get_clean();
+echo $_prefixVariable36;?>
 
                             <?php ob_start();
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable36 = ob_get_clean();
-echo $_prefixVariable36;?>
+$_prefixVariable37 = ob_get_clean();
+echo $_prefixVariable37;?>
 
                         <?php ob_start();
 }
-$_prefixVariable37 = ob_get_clean();
-echo $_prefixVariable37;?>
+$_prefixVariable38 = ob_get_clean();
+echo $_prefixVariable38;?>
 
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
@@ -389,39 +393,39 @@ echo $_prefixVariable37;?>
                         <td></td> -->
                         <td>NT<?php ob_start();
 echo $_smarty_tpl->tpl_vars['user_item']->value['cash'];
-$_prefixVariable38 = ob_get_clean();
-echo $_prefixVariable38;?>
+$_prefixVariable39 = ob_get_clean();
+echo $_prefixVariable39;?>
 </td>
                         <td id='total_price'>NT<?php ob_start();
 echo $_smarty_tpl->tpl_vars['total_price']->value;
-$_prefixVariable39 = ob_get_clean();
-echo $_prefixVariable39;?>
+$_prefixVariable40 = ob_get_clean();
+echo $_prefixVariable40;?>
 </td>
                         <td id='user_final_cash'>
                             <?php ob_start();
 if ($_smarty_tpl->tpl_vars['user_final_cash']->value >= 0) {
-$_prefixVariable40 = ob_get_clean();
-echo $_prefixVariable40;?>
-
-                            <?php ob_start();
-echo $_smarty_tpl->tpl_vars['user_final_cash']->value;
 $_prefixVariable41 = ob_get_clean();
 echo $_prefixVariable41;?>
 
                             <?php ob_start();
-} else {
+echo $_smarty_tpl->tpl_vars['user_final_cash']->value;
 $_prefixVariable42 = ob_get_clean();
 echo $_prefixVariable42;?>
 
                             <?php ob_start();
-echo $_smarty_tpl->tpl_vars['user_final_cash']->value;
+} else {
 $_prefixVariable43 = ob_get_clean();
 echo $_prefixVariable43;?>
+
+                            <?php ob_start();
+echo $_smarty_tpl->tpl_vars['user_final_cash']->value;
+$_prefixVariable44 = ob_get_clean();
+echo $_prefixVariable44;?>
 (餘額不足)
                             <?php ob_start();
 }
-$_prefixVariable44 = ob_get_clean();
-echo $_prefixVariable44;?>
+$_prefixVariable45 = ob_get_clean();
+echo $_prefixVariable45;?>
 
                         </td>
                         <td>
@@ -429,14 +433,14 @@ echo $_prefixVariable44;?>
                                     <button id="checkout_button" class="btn btn-warning"
                                     <?php ob_start();
 if ($_smarty_tpl->tpl_vars['user_final_cash']->value < 0 || $_smarty_tpl->tpl_vars['total_price']->value <= 0) {
-$_prefixVariable45 = ob_get_clean();
-echo $_prefixVariable45;?>
+$_prefixVariable46 = ob_get_clean();
+echo $_prefixVariable46;?>
 
                                         disabled='disabled' 
                                         <?php ob_start();
 }
-$_prefixVariable46 = ob_get_clean();
-echo $_prefixVariable46;?>
+$_prefixVariable47 = ob_get_clean();
+echo $_prefixVariable47;?>
 >
                                         <span class="glyphicon glyphicon-usd">
                                         </span>
@@ -450,8 +454,8 @@ echo $_prefixVariable46;?>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable47 = ob_get_clean();
-echo $_prefixVariable47;?>
+$_prefixVariable48 = ob_get_clean();
+echo $_prefixVariable48;?>
 '>
         
         

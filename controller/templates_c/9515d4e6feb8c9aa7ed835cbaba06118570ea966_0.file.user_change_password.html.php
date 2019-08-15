@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-15 16:11:46
+/* Smarty version 3.1.33, created on 2019-08-15 17:49:19
   from 'C:\xampp\htdocs\shopping\views\user_change_password.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d5513c20855c7_12149372',
+  'unifunc' => 'content_5d552a9f8ccf83_70390424',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9515d4e6feb8c9aa7ed835cbaba06118570ea966' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\user_change_password.html',
-      1 => 1565856512,
+      1 => 1565862557,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d5513c20855c7_12149372 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d552a9f8ccf83_70390424 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -252,7 +252,7 @@ echo $_prefixVariable19;?>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="login"></label>
                     <div class="col-md-4">
-                        <button type='button' id="new_form_button" name="signup" class="btn btn-success">確認修改</button>
+                        <button type='button' disabled id="new_form_button" name="signup" class="btn btn-success">確認修改</button>
                     </div>
                 </div>
             </div>

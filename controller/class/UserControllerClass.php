@@ -77,6 +77,44 @@
         }
 
         /*
+         * 驗證密碼
+         */
+        function POST_checkPassword() {
+            $user_item = getUser();
+            $password = $_POST['password'];
+            $check_tool = new CheckTool;
+            if (!$is_right = $check_tool->checkPassword($password)) {
+                $data = [
+                    'alert' => '密碼格式錯誤',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $user = new User;
+            $user_password_item = $user->getPasswordByAccount($user_item['account']);
+            $is_old_password_right = password_verify($password, $user_password_item['password']);
+            if ($is_old_password_right) {
+                $data = [
+                    'alert' => '密碼正確',
+                    'location' => '',
+                    'is_success' => true
+                ];
+                echo json_encode($data);
+                exit();
+            } else {
+                $data = [
+                    'alert' => '密碼錯誤',
+                    'location' => '',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+        }
+
+        /*
          * 修改密碼頁面
          */
         public function GET_changePassword()
@@ -97,8 +135,50 @@
         public function PUT_changePassword()
         {
             $this->isPut();
+            $user_item = getUser();
+            parse_str(file_get_contents('php://input'), $_PUT);
+            $password = $_PUT['password'];
             $check_tool = new CheckTool;
-            // $check_tool->checkName()
+            if (!$is_right = $check_tool->checkPassword($password)) {
+                $data = [
+                    'alert' => '密碼格式錯誤',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $user = new User;
+            $user_password_item = $user->getPasswordByAccount($user_item['account']);
+            $is_password_same = password_verify($password, $user_password_item['password']);
+            if ($is_password_same) {
+                $data = [
+                    'alert' => '新舊密碼不可相同',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $is_success = $user->changePassword($user_item['user_id'], $password);
+            if ($is_success) {
+                $data = [
+                    'alert' => '修改成功',
+                    'location' => '/shopping/controller/usercontroller.php/userInfo',
+                    'is_success' => true,
+                ];
+                echo json_encode($data);
+                exit();
+            } else {
+                $data = [
+                    'alert' => '新舊密碼不可相同',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
         }
 
         /*
@@ -166,6 +246,67 @@
             $this->smarty->assign('user_item', $user_item);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/add_money.html');
+        }
+
+        /*
+         * 儲值頁面
+         */
+        public function POST_addMoney()
+        {
+            $this->isPost();
+            $user_item = getUser();
+            $add_money = $_POST['add_money'];
+            $check_tool = new CheckTool;
+            $user = new User;
+            $is_right = $check_tool->checkUnsignIntNoZero($add_money);
+            ## 檢查加值金額
+            if (!$is_right) {
+                $data = [
+                    'alert' => '金額錯誤',
+                    'location' => '',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            } elseif ($add_money > 9999999) {
+                $data = [
+                    'alert' => '金額錯誤',
+                    'location' => '',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $cash = $add_money + $user_item['cash'];
+            ## 計算總金額
+            if ($cash > 9999999) {
+                $data = [
+                    'alert' => '總金額超過上限',
+                    'location' => '',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            ## 儲值
+            $is_success = $user->updateCash($user_item['user_id'], $cash);
+            if ($is_success) {
+                $data = [
+                    'alert' => '儲值成功',
+                    'location' => '/shopping/controller/guestcontroller.php/index',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            } else {
+                $data = [
+                    'alert' => '儲值失敗',
+                    'location' => '/shopping/controller/guestcontroller.php/index',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
         }
 
         /*

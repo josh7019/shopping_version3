@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-15 11:59:52
+/* Smarty version 3.1.33, created on 2019-08-15 20:04:08
   from 'C:\xampp\htdocs\shopping\views\add_money.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d54d8b8da0a87_82850870',
+  'unifunc' => 'content_5d554a386f4575_44516723',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ccef0309c7f44cafaad6e8660834ddae63fd0260' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\add_money.html',
-      1 => 1565841209,
+      1 => 1565870618,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d54d8b8da0a87_82850870 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d554a386f4575_44516723 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@ function content_5d54d8b8da0a87_82850870 (Smarty_Internal_Template $_smarty_tpl)
  type="text/javascript" src='/shopping/scripts/functions.js'><?php echo '</script'; ?>
 >
         <?php echo '<script'; ?>
- type="text/javascript" src=''><?php echo '</script'; ?>
+ type="text/javascript" src='/shopping/scripts/add_money.js'><?php echo '</script'; ?>
 >
         <title>Document</title>
         <style>
@@ -65,6 +65,9 @@ function content_5d54d8b8da0a87_82850870 (Smarty_Internal_Template $_smarty_tpl)
             }
             #login_form {
                 background-color: #262626
+            }
+            #add_money_form {
+                display: none;
             }
         </style>
     </head>
@@ -237,31 +240,28 @@ echo $_prefixVariable20;?>
             <form id='login_form' class="form-horizontal myform" >
             <fieldset>
             <!-- Form Name -->
-            <legend id='title'>登入</legend>
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Account">帳號</label>  
-                <div class="col-md-4">
-                    <input id="account" name="account" type="text" placeholder="請輸入帳號" class="form-control input-md" required>
-                </div>
-            </div>
+            <legend id='title'>加值</legend>
 
             <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="password">密碼</label>  
+            <div class="form-group" id='password_form'>
+                <label class="col-md-4 control-label" for="password">密碼</label>
+                <button type="button" class="btn btn-success" id="password_button">確認</button>
                 <div class="col-md-4">
                     <input id="password" name="password" type="password" placeholder="請輸入密碼" class="form-control input-md" required>
+                    
                 </div>
             </div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="signin"></label>
+            <!-- Text input-->
+            <div class="form-group" id='add_money_form'>
+                <label class="col-md-4 control-label" for="Account">加值額度</label>
+                <button id='add_money_button' type='button' class="btn btn-info">加值</button>
                 <div class="col-md-4">
-                    <button id='login_button' type='button' id="signin" name="signin" class="btn btn-info">登入</button>
-                    <a href="/shopping/controller/guestcontroller.php/signup" class='btn btn-success'>註冊</a>
+                    <input id="add_money" min='1' max='9999999' name="add_money" type="number" placeholder="請輸入加值金額" class="form-control input-md" required>
+                    <span class="help-block">1~999999(十萬)</span> 
                 </div>
             </div>
+ 
             </fieldset>
             </form>
         </div>

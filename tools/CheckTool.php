@@ -15,6 +15,15 @@
             $result_name = preg_match($this->name_patt, $name);
             return $result_name;
         }
+
+        /*
+         * 檢查密碼格式
+         */
+        public function checkPassword($password) {
+            $result_name = preg_match($this->password_patt, $password);
+            return $result_name;
+        }
+
         /*
          * 檢查註冊表單
          */

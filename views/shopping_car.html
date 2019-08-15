@@ -177,7 +177,7 @@
                                     <td>{{$product_item.name}}</td>
                                     <td>{{if $product_item.stock < 10}} {{$product_item.stock}} {{else}} 庫存量 > 10 {{/if}}</td>
                                     <td>NT{{$product_item.price}}</td>
-                                    <td><input class='amount' type='number' min='1' value="{{$product_item['amount']}}" style="width:50px"></td>
+                                    <td><input class='amount' type='number' min='1' max='{{$product_item.stock}}' value="{{$product_item['amount']}}" style="width:50px"></td>
                                     <td>
                                         <span class="pull-right delete_button">
                                             <span class="btn btn-danger">
