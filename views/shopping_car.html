@@ -58,79 +58,85 @@
 <body>
         <!-- 導覽列 -->
         <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                    
+                    <a class="navbar-brand" href="/shopping/controller/guestcontroller.php/index">商城首頁</a>
+                    </div>
                 
-                <a class="navbar-brand" href="/shopping/controller/guestcontroller.php/index">商城首頁</a>
-                </div>
-            
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    {{if !$is_login}}
-                    <li class=""><a href="/shopping/controller/guestcontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/guestcontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
-                    {{else}}
-                    <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
-                    {{/if}}
-                    {{if $permission == 2}}
-                    <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
-                    {{/if}}
-                </ul>
-                
-                <ul class="nav navbar-nav navbar-right">
-                    {{if $is_login }}
-                        {{if $permission == 2}}
-                        
-                        <li>
-                            <a href="/shopping/controller/managercontroller.php/orderMenu">
-                                <span class="glyphicon glyphicon-list-alt"></span> 訂單管理
-                            </a>
-                        </li>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {{if !$is_login}}
+                        <li class=""><a href="/shopping/controller/guestcontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="/shopping/controller/guestcontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                         {{else}}
-                            <li>
-                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
-                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
-                                    <span class="badge badge-light" id='product_count'>
-                                        {{if isset($order_detail_list_length)}}
-                                        {{$order_detail_list_length}}
-                                        {{else}}
-                                        0
-                                        {{/if}}
-                                    </span>
-                                </a>
-                            </li>
+                        <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
+                            {{if $permission == 2}}
+                            <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
+                            {{else}}
+                            <li><a href="/shopping/controller/usercontroller.php/addMoney"><span class="glyphicon glyphicon-briefcase"></span> 儲值</a></li>
+                            <li><a href="/shopping/controller/usercontroller.php/userInfo"><span class="glyphicon glyphicon-pencil"></span> 修改個人資料</a></li>
+                            <li><a ><span class="glyphicon glyphicon-jpy"></span> 餘額 : {{$cash}}</a></li>
+                            {{/if}}
                         {{/if}}
-                        {{else}}
+                        
+                        
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                        {{if $is_login }}
+                            {{if $permission == 2}}
+                            
                             <li>
-                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
-                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                <a href="/shopping/controller/managercontroller.php/orderMenu">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 訂單管理
                                 </a>
                             </li>
-                            <li>
-                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
-                                    <span class="badge badge-light" id='product_count'>
-                                        {{if isset($order_detail_list_length)}}
-                                        {{$order_detail_list_length}}
-                                        {{else}}
-                                        0
-                                        {{/if}}
-                                    </span>
-                                </a>
-                            </li>
-                    {{/if}}
-                </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+                            {{else}}
+                                <li>
+                                    <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                        <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                        <span class="badge badge-light" id='product_count'>
+                                            {{if isset($order_detail_list_length)}}
+                                            {{$order_detail_list_length}}
+                                            {{else}}
+                                            0
+                                            {{/if}}
+                                        </span>
+                                    </a>
+                                </li>
+                            {{/if}}
+                            {{else}}
+                                <li>
+                                    <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                        <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                        <span class="badge badge-light" id='product_count'>
+                                            {{if isset($order_detail_list_length)}}
+                                            {{$order_detail_list_length}}
+                                            {{else}}
+                                            0
+                                            {{/if}}
+                                        </span>
+                                    </a>
+                                </li>
+                        {{/if}}
+                    </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
 
 
         <div class='container'>
@@ -175,8 +181,8 @@
                                     <input type="hidden" value="{{$product_item['product_id']}}">
                                     <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
                                     <td>{{$product_item.name}}</td>
-                                    <td>{{if $product_item.stock < 10}} {{$product_item.stock}} {{else}} 庫存量 > 10 {{/if}}</td>
-                                    <td>NT{{$product_item.price}}</td>
+                                    <td>{{$product_item.stock}}</td>
+                                    <td>{{$product_item.price}}</td>
                                     <td><input class='amount' type='number' min='1' max='{{$product_item.stock}}' value="{{$product_item['amount']}}" style="width:50px"></td>
                                     <td>
                                         <span class="pull-right delete_button">
@@ -198,16 +204,16 @@
                     <thead id='head2'>
                         <!-- <th style="width:110px"></th>
                         <th></th> -->
-                        <th>現有額度</th>
-                        <th>商品總價</th>
-                        <th>結帳後餘額</th>
+                        <th>現有額度(NT)</th>
+                        <th>商品總價(NT)</th>
+                        <th>結帳後餘額(NT)</th>
                         <th id='button_colum'></th>
                     </thead>
                     <tbody>
                         <!-- <td></td>
                         <td></td> -->
-                        <td>NT{{$user_item['cash']}}</td>
-                        <td id='total_price'>NT{{$total_price}}</td>
+                        <td id='cash'>{{$user_item['cash']}}</td>
+                        <td id='total_price'>{{$total_price}}</td>
                         <td id='user_final_cash'>
                             {{if $user_final_cash >= 0}}
                             {{$user_final_cash}}

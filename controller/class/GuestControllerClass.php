@@ -43,9 +43,7 @@
                 $type = 'name';
                 $search_value = $_GET['search_value'];
                 $product_count = $product->searchProductOnSaleCount($type, $search_value);
-                $page_amount = ceil($product_count/$cells);
-                $page_amount = ($page_amount == 0) ? 1 : $page_amount;
-                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
+               
                 $product_list = $product->searchProductOnSaleLimit(
                     $type,
                     $search_value,
@@ -56,12 +54,13 @@
                 $this->smarty->assign('search_value', $search_value);
             } else {
                 $product_count = $product->getAllProductOnSaleCount();
-                $page_amount = ceil($product_count/$cells);
-                $page_amount = ($page_amount == 0) ? 1 : $page_amount;
-                $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
                 $product_list = $product->getAllProductOnSaleLimit($page_number, $cells);
                 $search = false;
             }
+            $page_amount = ceil($product_count/$cells);
+            $page_amount = ($page_amount == 0) ? 1 : $page_amount;
+            $page_number = ($page_number > $page_amount) ? $page_amount : $page_number;
+            
             foreach ($product_list as $index => $product_item) {
                 $total_saled = $order_detail->getProductSaled($product_item['product_id']);
                 $product_list[$index]['total_saled'] = $total_saled;
@@ -79,6 +78,7 @@
             $this->smarty->assign('page_amount', $page_amount);
             $this->smarty->assign('product_list', $product_list);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/index.html');
         }
@@ -109,6 +109,7 @@
             $user_item = getUser();
 
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/signup.html');
         }

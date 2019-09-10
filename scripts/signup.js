@@ -1,8 +1,8 @@
-    let isAccountRight = true;
-    let isPasswordRight = false;
-    let isPasswordTwice = false;
-    let isIdNumberRight = false;
-    let isNameRight = false;
+let isAccountRight = true;
+let isPasswordRight = false;
+let isPasswordTwice = false;
+let isIdNumberRight = false;
+let isNameRight = false;
 
 window.onload=function(){
 
@@ -130,6 +130,7 @@ function submitSignup(){
         url : '/shopping/controller/guestController.php/signup',
         data : data,
         success : function (result_array) {
+            console.log(result_array)
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             direct(result_array['location']);

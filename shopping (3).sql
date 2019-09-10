@@ -80,7 +80,7 @@ ALTER TABLE `user`
 ALTER TABLE `manager`
   MODIFY `manager_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `order_detail`
+ALTER TABLE `orderDetail`
   MODIFY `order_detail_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `order_menu`

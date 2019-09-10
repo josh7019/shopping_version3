@@ -117,6 +117,7 @@
 
             $this->smarty->assign('product_list', $product_list);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_product.html');
         }
@@ -157,11 +158,24 @@
             $product_id = $_POST['product_id'];
             $price = $_POST['price'];
             $status = $_POST['status'];
-            $descript = $_POST['descript'];
             $name = $_POST['name'];
             $stock = $_POST['stock'];
             $product = new Product;
-            $is_success = $product->editOneProduct($name, $price, $status, $descript, $stock, $product_id);
+            $name  =  htmlentities($name, ENT_NOQUOTES, "UTF-8");
+            $check_tool = new CheckTool;
+            ## 檢查價格與庫存
+            $is_price_right = ($check_tool->checkUnsignIntNoZero($price) && $price <= 99999) ? true : false;
+            $is_stock_right = ($check_tool->checkUnsignIntNoZero($price) && $stock <= 1000) ? true : false;
+            if (!$is_price_right && $is_stock_right) {
+                $data = [
+                    'alert' => '價格或庫存量錯誤',
+                    'location' => '/shopping/controller/managercontroller.php/product',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $is_success = $product->editOneProduct($name, $price, $status, $stock, $product_id);
             $product_item=$product->getOneProduct($product_id);
             uploadImage($product_item);
             if ($is_success) {
@@ -174,7 +188,7 @@
                 exit();
             } else {
                 $data = [
-                    'alert' => '修改失敗',
+                    'alert' => '資料無異動',
                     'is_success' => false
                 ];
                 echo json_encode($data);
@@ -193,6 +207,7 @@
 
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('is_login', $is_login);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_add_product.html');
         }
         
@@ -206,9 +221,21 @@
             $price = $_POST['price'];
             $status = $_POST['status'];
             $stock = $_POST['stock'];
-            $descript = $_POST['descript'];
             $product = new Product;
-            $is_success = $product->addProduct($name, $price, $status, $descript, $stock);
+            $check_tool = new CheckTool;
+            $is_price_right = ($check_tool->checkUnsignIntNoZero($price) && $price <= 99999) ? true : false;
+            $is_stock_right = ($check_tool->checkUnsignIntNoZero($price) && $stock <= 1000) ? true : false;
+            if (!$is_price_right && $is_stock_right) {
+                $data = [
+                    'alert' => '價格或庫存量錯誤',
+                    'location' => '/shopping/controller/managercontroller.php/product',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $name  =  htmlentities($name, ENT_NOQUOTES, "UTF-8");
+            $is_success = $product->addProduct($name, $price, $status, $stock);
             $data = [
                 'alert' => '新增產品成功',
                 'location' => '/shopping/controller/managercontroller.php/product'
@@ -231,6 +258,7 @@
             
             $this->smarty->assign('product_item', $product_item);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_edit_product.html');
         }
@@ -277,6 +305,7 @@
             
             $this->smarty->assign('user_list', $user_list);
             $this->smarty->assign('permission', $manager_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/maneger_member.html');
         }
@@ -345,6 +374,7 @@
             
             $this->smarty->assign('order_menu_list', $order_menu_list);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/manager_order_menu.html');
         }

@@ -34,5 +34,13 @@ window.onload = function() {
             alert('請先登出');
             window.location = '/shopping/controller/guestcontroller.php/index';
             break;
+        case 8:
+            alert('編號錯誤');
+            window.location = '/shopping/controller/managercontroller.php/ordermenu';
+            break;
+        case 9:
+            alert('訂單號碼不存在');
+            window.location = '/shopping/controller/managercontroller.php/ordermenu';
+            break;
     }
 }

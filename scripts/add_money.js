@@ -7,6 +7,7 @@ window.onload=function(){
     let add_money_button = document.getElementById('add_money_button');
     let password_form = document.getElementById('password_form');
     let add_money_form = document.getElementById('add_money_form');
+    let title = document.getElementById('title');
     password_button.onclick = function() {
         is_password_right = checkOldPassword(password);
     }
@@ -40,6 +41,7 @@ function checkOldPassword(password){
             if (result_array['is_success']) {
                 password_form.style.display = 'none';
                 add_money_form.style.display = 'block';
+                title.innerHTML = '加值';
             }
         }
     })
@@ -52,10 +54,10 @@ function addMoney() {
             type : 'POST',
             url : '/shopping/controller/usercontroller.php/addmoney',
             data : {
-                'add_money' : add_money.value
+                'add_money' : add_money.value,
+                'password' : password.value
             },
             success : function(result_array) {
-                console.log(result_array);
                 result_array = JSON.parse(result_array);
                 showSingal(result_array['alert']);
                 direct(result_array['location']);

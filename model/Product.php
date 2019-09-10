@@ -8,13 +8,13 @@
         /*
          * 新增一項產品
          */
-        public function addProduct($name, $price, $status, $descript, $stock)
+        public function addProduct($name, $price, $status, $stock)
         {
             $is_success = $this->insertInto(
                 $this->table,
-                ['name', 'price', 'status', 'descript', 'stock'],
-                [$name, $price, $status, $descript, $stock],
-                'siisi'
+                ['name', 'price', 'status', 'stock'],
+                [$name, $price, $status, $stock],
+                'siii'
             );
             return $is_success;
         }
@@ -202,15 +202,15 @@
          * 修改一項產品
          */
 
-        public function editOneProduct($name, $price, $status, $descript, $stock, $product_id)
+        public function editOneProduct($name, $price, $status, $stock, $product_id)
         {
             $is_success = $this->update(
                 $this->table,
-                ['name', 'price', 'status', 'descript', 'stock'],
-                [$name, $price, $status, $descript, $stock],
+                ['name', 'price', 'status', 'stock'],
+                [$name, $price, $status, $stock],
                 ['product_id'],
                 [$product_id],
-                'siisii'
+                'siiii'
             );
             return $is_success;
         }

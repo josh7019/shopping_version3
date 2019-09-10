@@ -2,6 +2,7 @@
     
     class Controller
     {
+        private $smarty;
         public function isGet()
         {
             if (!$_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -51,7 +52,7 @@
         /*
          * 前端重導
          */
-        protected function redirect($controller, $action, $alert)
+        public function redirect($controller, $action, $alert)
         {
             $data = [
                 'alert' => $alert,
@@ -67,6 +68,7 @@
          */
         public function GET_error($error)
         {
+            $this->smarty = new Smarty;
             $this->smarty->assign('error', $error);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/error.html');
             exit();

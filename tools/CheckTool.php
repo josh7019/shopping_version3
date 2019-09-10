@@ -31,7 +31,7 @@
         {
             $result_account = $this->checkAccount($account);
             $result_password = preg_match($this->password_patt, $password);
-            $result_name = preg_match($this->$name_patt, $name);
+            $result_name = preg_match($this->name_patt, $name);
             $result_id_number = $this->checkIdNumber($id_number);
             return ($result_account && $result_password && $result_name && $result_id_number) ? true : false;
         }
@@ -90,12 +90,12 @@
          */
         public function checkAccount($account)
         {
-            $is_format_right=preg_match($this->account_patt, $account);
+            $is_format_right = preg_match($this->account_patt, $account);
             if (!$is_format_right) {
                 return false;
             }
-            $user=new User;
-            $user_account=$user->getAccount($account);
+            $user = new User;
+            $user_account = $user->getAccount($account);
             ## 如果帳號不存在
             if (!$user_account) {
                 return true;

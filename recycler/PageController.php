@@ -83,4 +83,17 @@
     //         $smarty->display('../views/logout.html');
     //     }
     // }
-    
+    // <!-- 產品描述輸入-->
+    // <div class="form-group">
+    //         <label class="col-md-4 control-label descript" for="descript">產品描述</label><span class='descript' id='descript_signal'></span>
+    //         <div class="col-md-4">
+    //             <textarea name="descript" id="descript" cols="30" rows="5"></textarea>
+    //         </div>
+    // </div>
+    // <!-- 產品描述輸入-->
+    //         <div class="form-group">
+    //                 <label class="col-md-4 control-label descript" for="descript">產品描述</label><span class='descript' id='descript_signal'></span>
+    //                 <div class="col-md-4">
+    //                     <textarea name="descript" id="descript" cols="30" rows="5">{{$product_item['descript']}}</textarea>
+    //                 </div>
+    //         </div>

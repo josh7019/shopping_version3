@@ -2,10 +2,8 @@ let add_product;
 let add_button;
 let price;
 let name;
-let descript;
 let is_price_right;
 let is_name_right;
-let is_descript_right;
 let is_stock_right;
 
 window.onload = function(){
@@ -13,10 +11,8 @@ window.onload = function(){
     add_button = document.getElementById('add_button');
     price = document.getElementById('price');
     name = document.getElementById('name');
-    descript = document.getElementById('descript');
     stock = document.getElementById('stock');
 
-    descript.oninput = function(event) {checkDescript(event);}
     price.oninput = function(event) {checkPrice(event);}
     name.oninput = function(event) {checkName(event);}
     stock.oninput = function(event) {checkStock(event);}
@@ -50,6 +46,10 @@ function checkPrice(e){
         document.getElementById('price_signal').innerHTML = 'x';
         issubmit()
         is_price_right = false;
+    } else if (price > 99999) {
+        document.getElementById('price_signal').innerHTML = '價格不得超過99999';
+        issubmit()
+        is_stock_right = false;
     } else {
         document.getElementById('price_signal').innerHTML = 'o';
         issubmit()
@@ -59,10 +59,14 @@ function checkPrice(e){
 }
 
 function checkStock(e){
-    price = e.target.value;
+    stock = e.target.value;
     
-    if (!price.match(/^[1-9][0-9]{0,}$/)) {
+    if (!stock.match(/^0$|^[1-9][0-9]{0,}$/)) {
         document.getElementById('stock_signal').innerHTML = 'x';
+        issubmit()
+        is_stock_right = false;
+    } else if (stock > 1000) {
+        document.getElementById('stock_signal').innerHTML = '庫存不得超過1000';
         issubmit()
         is_stock_right = false;
     } else {
@@ -99,7 +103,7 @@ function checkDescript(e){
 
 
 function issubmit(){
-    if (is_price_right && is_name_right && is_descript_right && is_stock_right) {
+    if (is_price_right && is_name_right && is_stock_right) {
         add_button.onclick = function(){submit();};
     } else {
         add_button.onclick = function(){alert('格式有誤')};
@@ -111,25 +115,23 @@ function issubmit(){
 function submit(){
     var formData=new FormData(add_product);
     console.log(formData);
-
-    
-    // $.ajax({
-    //         url:'/shopping/Controller/ManagerController.php/addProduct',
-    //         type:'post',
-    //         dataType:'text',
-    //         cache: false,
-    //         processData: false,
-    //         contentType: false,
-    //         data:formData,
-    //         success:function(result_array){  
-    //             console.log(result_array);
-    //             result_array = JSON.parse(result_array);
-    //             showSingal(result_array['alert']);
-    //             direct(result_array['location']);
-    //         },
-    //         error:function(){
-    //         }
-    //     })
+    $.ajax({
+            url:'/shopping/Controller/ManagerController.php/addProduct',
+            type:'post',
+            dataType:'text',
+            cache: false,
+            processData: false,
+            contentType: false,
+            data:formData,
+            success:function(result_array){  
+                console.log(result_array);
+                result_array = JSON.parse(result_array);
+                showSingal(result_array['alert']);
+                direct(result_array['location']);
+            },
+            error:function(){
+            }
+        })
     }
 
 

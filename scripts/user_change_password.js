@@ -50,23 +50,6 @@ window.onload=function(){
 
 }
 
-
-// 檢查密碼格式
-function checkPassword(e) {
-    if(checkPasswordFormat(e.target.value)){
-        isPasswordRight=true;
-        isPasswordTwice=false;
-        $('#password_Signal').html('ok');
-        $('#passwordTwice_Signal').html('密碼不相同');
-    }else{
-        isPasswordRight=false;
-        isPasswordTwice=false;
-        $('#passwordTwice_Signal').html('密碼不相同');
-        $('#password_Signal').html('格式錯誤');
-    }
-    isSubmit();
-}
-
 // 二次驗證密碼格式
 function confirmPassword (e) {
     let password='';
@@ -110,10 +93,11 @@ function changePassword(new_password){
         type : 'PUT',
         url : '/shopping/controller/usercontroller.php/changePassword',
         data : {
-            'password' : new_password.value
+            'old_password' : old_password.value,
+            'new_password' : new_password.value
         },
         success : function(result_array) {
-            console.log(result_array);
+            console.log(result_array)
             result_array = JSON.parse(result_array);
             showSingal(result_array['alert']);
             direct(result_array['location']);

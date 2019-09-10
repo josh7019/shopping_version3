@@ -72,6 +72,7 @@
             
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_info.html');
         }
@@ -125,6 +126,7 @@
             
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_change_password.html');
         }
@@ -137,9 +139,10 @@
             $this->isPut();
             $user_item = getUser();
             parse_str(file_get_contents('php://input'), $_PUT);
-            $password = $_PUT['password'];
+            $old_password = $_PUT['old_password'];
+            $new_password = $_PUT['new_password'];
             $check_tool = new CheckTool;
-            if (!$is_right = $check_tool->checkPassword($password)) {
+            if (!$is_right = $check_tool->checkPassword($new_password)) {
                 $data = [
                     'alert' => '密碼格式錯誤',
                     'location' => '',
@@ -150,7 +153,17 @@
             }
             $user = new User;
             $user_password_item = $user->getPasswordByAccount($user_item['account']);
-            $is_password_same = password_verify($password, $user_password_item['password']);
+            $is_user_right = password_verify($old_password, $user_password_item['password']);
+            if (!$is_user_right) {
+                $data = [
+                    'alert' => '使用者密碼錯誤',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $is_password_same = password_verify($new_password, $user_password_item['password']);
             if ($is_password_same) {
                 $data = [
                     'alert' => '新舊密碼不可相同',
@@ -160,8 +173,8 @@
                 echo json_encode($data);
                 exit();
             }
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $is_success = $user->changePassword($user_item['user_id'], $password);
+            $new_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $is_success = $user->changePassword($user_item['user_id'], $new_password);
             if ($is_success) {
                 $data = [
                     'alert' => '修改成功',
@@ -192,6 +205,7 @@
             
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/user_change_name.html');
         }
@@ -244,20 +258,33 @@
             
             $this->smarty->assign('permission', $user_item['permission']);
             $this->smarty->assign('user_item', $user_item);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/add_money.html');
         }
 
         /*
-         * 儲值頁面
+         * 儲值
          */
         public function POST_addMoney()
         {
             $this->isPost();
             $user_item = getUser();
             $add_money = $_POST['add_money'];
+            $password = $_POST['password'];
             $check_tool = new CheckTool;
             $user = new User;
+            $user_password_item = $user->getPasswordByAccount($user_item['account']);
+            $is_user_right = password_verify($password, $user_password_item['password']);
+            if (!$is_user_right) {
+                $data = [
+                    'alert' => '使用者密碼錯誤',
+                    'location' => '',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
             $is_right = $check_tool->checkUnsignIntNoZero($add_money);
             ## 檢查加值金額
             if (!$is_right) {
@@ -323,9 +350,10 @@
                 $product_id_list = $order_detail->getAllProductId($order_menu_id);
                 $product_list = [];
                 $product = new Product;
+                ## 檢查物品是否售賣中
                 foreach($product_id_list as $product_id) {
                     $product_item = $product->getOneProductOnSale($product_id["product_id"]);
-                    if (!isset($product_item["product_id"])) {
+                    if (!isset($product_item["product_id"]) || $product_item['stock'] == 0) {
                         $order_detail->deleteOne($order_menu_id,$product_id["product_id"]);
                         continue;
                     }
@@ -347,6 +375,7 @@
             $this->smarty->assign('product_list', $product_list);
             $this->smarty->assign('total_price', $total_price);
             $this->smarty->assign('user_final_cash', $user_final_cash);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/shopping_car.html');
         }
@@ -492,6 +521,16 @@
             $order_menu_id = GetOrderMenuId($user_item);
             $total_price = getTotalPrice($order_menu_id);
             $final_price= $user_item['cash'] - $total_price;
+            ## 檢查購物車是否為空
+            if ($total_price == 0) {
+                $data = [
+                    'alert' => '購物車內無物品',
+                    'location' => '/shopping/controller/guestcontroller.php/shoppingcar',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
             ## 檢查餘額是否足夠
             if ($final_price < 0) {
                 $data = [
@@ -567,6 +606,7 @@
             }
             $this->smarty->assign('order_menu_list', $order_menu_list);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/shopping_history.html');
         }
@@ -580,16 +620,28 @@
             $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $order_menu_id = $this->id;
+            
             ## 檢查訂單編號格式
             $check_tool = new CheckTool;
             if (!$is_right = $check_tool->checkUnsignInt($order_menu_id)) {
+                if ($user_item['permission'] == 2) {
+                    $this->GET_error(8);
+                }
                 $this->GET_error(1);
                 exit();
             }
-            ## 檢查訂單擁有者是否正確
             $order_menu = new OrderMenu;
-            @$user_id = $order_menu->getOneUserId($order_menu_id);
+            ## 檢查訂單是否存在
             $order_menu_item = $order_menu->getOneBYOrderMenuId($order_menu_id);
+            if (!isset($order_menu_item['user_id'])) {
+                if ($user_item['permission'] == 2) {
+                    $this->GET_error(9);
+                }
+                $this->GET_error(2);
+                exit();
+            }
+            ## 檢查訂單擁有者是否正確
+            @$user_id = $order_menu->getOneUserId($order_menu_id);
             if ($user_item['permission'] != 2) {
                 if ($user_id != $user_item['user_id'] || $order_menu_item['is_checkout'] == 0) {
                     $this->GET_error(2);
@@ -607,6 +659,7 @@
             }
             $this->smarty->assign('order_detail_list', $order_detail_list);
             $this->smarty->assign('permission', $user_item['permission']);
+            $this->smarty->assign('cash', $user_item['cash']);
             $this->smarty->assign('is_login', $is_login);
             $this->smarty->display($_SERVER['DOCUMENT_ROOT'] . '/shopping/views/shopping_detail.html');
         }

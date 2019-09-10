@@ -59,13 +59,14 @@
                         <li class=""><a href="/shopping/controller/guestcontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
                         <li><a href="/shopping/controller/guestcontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                         {{else}}
-                        <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span>登出</a></li>
+                        <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                             {{if $permission == 2}}
                             <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
                             <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
                             {{else}}
-                            <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-briefcase"></span>儲值</a></li>
-                            <li><a href="/shopping/controller/usercontroller.php/userEdit"><span class="glyphicon glyphicon-pencil"></span>修改個人資料</a></li>
+                            <li><a href="/shopping/controller/usercontroller.php/addMoney"><span class="glyphicon glyphicon-briefcase"></span> 儲值</a></li>
+                            <li><a href="/shopping/controller/usercontroller.php/userInfo"><span class="glyphicon glyphicon-pencil"></span> 修改個人資料</a></li>
+                            <li><a ><span class="glyphicon glyphicon-jpy"></span> 餘額 : {{$cash}}</a></li>
                             {{/if}}
                         {{/if}}
                         
@@ -131,7 +132,7 @@
             <form id='login_form' class="form-horizontal myform" >
             <fieldset>
             <!-- Form Name -->
-            <legend id='title'>加值</legend>
+            <legend id='title'>確認密碼</legend>
 
             <!-- Text input-->
             <div class="form-group" id='password_form'>
@@ -149,7 +150,7 @@
                 <button id='add_money_button' type='button' class="btn btn-info">加值</button>
                 <div class="col-md-4">
                     <input id="add_money" min='1' max='9999999' name="add_money" type="number" placeholder="請輸入加值金額" class="form-control input-md" required>
-                    <span class="help-block">1~999999(十萬)</span> 
+                    <span class="help-block">1~999999(十萬),總金額不得超過9999999</span> 
                 </div>
             </div>
  

@@ -50,11 +50,8 @@ function checkIdNumberFormat(id){
         if(sum%10==0){
             return true;
         }
-        return false;
     }
-    else{
         return false;
-    }
 }
 
 // 檢查姓名格式
@@ -93,7 +90,7 @@ function direct(location) {
 
 // 檢查內容是否為空
 function checkContent(str){
-    if (str.match(/\S{1,}/)) {
+    if (str.match(/^\S{1,20}$/)) {
         return true;
     } else {
         return false;
